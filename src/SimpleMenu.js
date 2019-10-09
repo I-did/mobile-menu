@@ -7,12 +7,29 @@
 		window.SimpleMenu = factory();
 	}
 })(function() {
-
+	// + "close with scrolling" and "close with esc"
+	// + swipes to left, to right, to bottom, to top
+	// + fixing header
 	let _,
 		__,
 		opt,
 		head = document.head,
 		body = document.body;
+
+	function debounce(func, wait, immediate) {
+	  var timeout;
+	  return function() {
+	    var context = this, args = arguments;
+	    var later = function() {
+	      timeout = null;
+	      if (!immediate) func.apply(context, args);
+	    };
+	    var callNow = immediate && !timeout;
+	    clearTimeout(timeout);
+	    timeout = setTimeout(later, wait);
+	    if (callNow) func.apply(context, args);
+	  };
+	}
 
 	class SimpleMenu {
 		constructor(options) {
@@ -25,7 +42,6 @@
 					animationIn: 'fi',
 					animationOut: 'fo',
 					animationDuration: 0.5,
-					animationDelay: 0,
 					animationTimigFunc: 'ease'
 				},
 				openBtn: {
@@ -60,28 +76,17 @@
 				fade: false,
 				swipe: true,
 				swipeThreshold: 0.5,
+				pageScrolling: false,
+				esc: true,
 				fixingHeader: {
 					selector: '',
 					class: '',
 					fixedAnimation: ''
 				}
-			}
+			};
 
-			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-				console.log('mobile');
-			} else {
-				console.log('no mobile');
-			}
-
-			opt = _.options = options || {}
-
-			// Сравниваем дефолт и опшнс
-			// Если опция найдена
-			// и если опция не строка, то
-			// перебрать такой же дефолт и если в опции этого свойсвта нет, то вставляем из дефолта
-			// Если опция строка, а дефолт объект, то
-			// ставим селектор
-			// ставим опцию
+			// create options from defaults
+			opt = _.options = options || {};
 			for (let name in _.defaults) {
 				if (opt[name] !== undefined) {
 					if (typeof opt[name] !== 'string' && opt[name] !== false) {
@@ -100,12 +105,111 @@
 			}
 
 			if (opt.mediaQuery !== '') {
-				opt.desktop = false;
+				opt.desktop = true;
 			}
 
-			// Сделать функцию проверки медиа-запроса
-
 			delete _.defaults;
+			_.checkMedia();			
+
+			window.addEventListener('resize', debounce(_.checkMedia, 100));
+
+		}
+
+		checkMedia(event) {
+			// if desktop true
+				// if mediaQuery
+
+					// if media matches
+						// if resize
+							// if menu
+								// if menu actived -> return
+								// else menu !actived -> add events
+							// else !menu -> buld menu
+						// else !resize -> build menu
+
+					// else no media mathces
+						// if resize
+							// if menu
+								// if menu actived -> remove events
+								// else -> return
+							// else !menu -> return
+						// else !resize -> return
+
+						
+			if (opt.desktop) {
+				if (opt.mediaQuery !== '') {
+					if (window.matchMedia(opt.mediaQuery).matches) {
+						if (event && event.type === 'resize') {
+							if (__) {
+								if (!__.actived) {
+									_.restoreEvents();
+								}
+							} else {
+								_.buldMenu();
+							}
+						} else {
+							_.buldMenu();
+						}			
+					} else {
+						if (event && event.type === 'resize') {
+							if (_.menu) {
+								if (__.actived) {
+									_.destroyEvents();
+								}
+							}
+						}
+					}					
+				} else {
+					// if desktop true (no media)
+						// if !resize -> build menu
+					if (!event) {
+						_.buldMenu();
+					}
+				}
+			} else {
+				// else desktop false
+
+					// if mobile device
+						// if resize
+							// if menu
+								// if menu actived -> return
+								// else menu !actived -> add events
+							// else !menu -> buld menu
+						// else !resize -> buld menu
+
+					// else !mobile device
+						// if resize
+							// if menu
+								// if menu actived -> remove events
+								// else menu !actived -> return
+							// else !menu -> return
+						// else !resize -> return
+
+				if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+					if (event && event.type === 'resize') {
+						if (__) {
+							if (!__.actived) {
+								_.restoreEvents();
+							}
+						} else {
+							_.buldMenu();
+						}
+					} else {
+						_.buldMenu();
+					}
+				} else {
+					if (event && event.type === 'resize') {
+						if (_.menu) {
+							if (__.actived) {
+								_.destroyEvents();
+							}
+						}
+					}
+				}
+			}
+		}
+
+		buldMenu() {
 			_.init();
 			_.initOverlay();
 			_.initMenu();
@@ -119,28 +223,29 @@
 				if (ovl === false) {
 					return false;
 				} else {
-					// Если селектор не передан, то создаем свой оверлей
+					// if !selector -> build overlay -> open & close with css3 animation
+					// else selector -> querySelector overlay -> open & close with toggle class
 					if (ovl.selector === '') {
 						tag = document.createElement('div');
 						tag.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;background:${ovl.bgc};z-index:${ovl.zi};${ovl.css}`;
 						ovl.open = function() {
 							body.appendChild(this.tag);
 							_.setAnimationFor(this, this.animationIn);
-						}
+						};
 						ovl.close = function() {
 							_.setAnimationFor(this, this.animationOut);
 							this.tag.addEventListener('animationend', () => body.removeChild(this.tag), {once: true});
-						}
+						};
 						_.buildAnimation(ovl, ['fi', 'fo'], ['opacity:0', 'opacity:1']);
 						_.insertAnimation(opt.animationIn, opt.animationOut);
 					} else {
 						tag = document.querySelector(ovl.selector || ovl);
 						ovl.open = function() {
 							this.tag.classList.add(ovl.class);
-						}
+						};
 						ovl.close = function() {
 							this.tag.classList.remove(ovl.class);
-						}
+						};
 					}
 					ovl.tag = tag;
 					return (tag) ? ovl : console.error('You\'rs overlay is not found!');
@@ -169,36 +274,47 @@
 				buttonToggleClass(_.openBtn, _.closeBtn);
 
 				__.open = function() {
-					__.open.container();
 					__.tag.classList.add(__.class);
+					__.open.container();
 					_.setAnimationFor(__, __.animationIn);
+					_.openBtn.tag.removeEventListener('click', __.open);
 					if (_.overlay) {
 						_.overlay.open();
 					}
 					__.tag.dispatchEvent(new Event('beforeopen'));
 					__.tag.addEventListener('animationend', function() {
 							__.tag.dispatchEvent(new Event('open'));
+							__.opened = true;
+							window.addEventListener('resize', __.close, {once: true});
+							_.closeBtn.tag.addEventListener('click', __.close);
+							_.overlay.tag.addEventListener('click', __.close);
 					}, {once: true});
-				}
+				};
 
 				__.close = function() {
 					_.setAnimationFor(__, __.animationOut);
+					_.closeBtn.tag.removeEventListener('click', __.close);
+					_.overlay.tag.removeEventListener('click', __.close);
 					if (_.overlay) {
 						_.overlay.close();
 					}
+					window.removeEventListener('resize', __.close);
 					__.tag.dispatchEvent(new Event('beforeclose'));
 					__.tag.addEventListener('animationend', function() {
 							__.tag.classList.remove(__.class);
 							__.open.container();
 							__.tag.dispatchEvent(new Event('close'));
+							__.opened = false;
+							_.openBtn.tag.addEventListener('click', __.open);
 					}, {once:true});
-				}
+				};
 
 				if (!opt.fade) {
-					__.container = document.createElement('div');
-					__.container.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100vh;overflow:hidden;';
-					__.container.style.top = getComputedStyle(__.tag).top;
-					__.container.style.bottom = getComputedStyle(__.tag).bottom;
+					let wrap = __.container = document.createElement('div');
+
+					wrap.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100vh;overflow:hidden;';
+					wrap.style.top = getComputedStyle(__.tag).top;
+					wrap.style.bottom = getComputedStyle(__.tag).bottom;
 					
 					__.contained = false;
 					__.tag.style.top = 0;
@@ -206,15 +322,16 @@
 
 					__.open.container = function() {
 						if (!__.contained) {
-							__.parent.appendChild(__.container);
-							__.container.appendChild(__.tag);	
+							wrap.style.height = `${__.tag.offsetHeight}px`;
+							__.parent.appendChild(wrap);
+							wrap.appendChild(__.tag);
 							__.contained = true;							
 						} else {
 							__.parent.appendChild(__.tag);
-							__.parent.removeChild(__.container);
+							__.parent.removeChild(wrap);
 							__.contained = false;
 						}
-					}
+					};
 					if (!opt.toTop && !opt.toBottom && !opt.toLeft && !opt.toRight) {
 						let windowWidth = window.screen.width,
 							openBtnCoords = {
@@ -246,23 +363,33 @@
 					__.open.container = () => false;
 				}
 				_.insertAnimation(opt.animationIn, opt.animationOut);
+				_.restoreEvents();
 				return menu;
 			})();
 		}
+
+		destroyEvents() {
+			_.openBtn.tag.removeEventListener('click', __.open);
+			_.closeBtn.tag.removeEventListener('click', __.close);
+			__.actived = false;
+		}
+
+		restoreEvents() {
+			_.openBtn.tag.addEventListener('click', __.open);
+			_.closeBtn.tag.addEventListener('click', __.close);
+			__.actived = true;
+		}
+
+
 
 		init() {
 
 			_.openBtn = (function() {
 				let btn = _.findElement(opt.openBtn, 'Open button(s)');
-				console.log(btn);
 				return btn;
 			})();
 
 			_.closeBtn = _.findElement(opt.closeBtn, 'Close button(s)');
-
-			_.openBtn.tag.addEventListener('click', () => __.open());
-
-			_.closeBtn.tag.addEventListener('click', () => __.close());
 		}
 
 		findElement(elem, errorName) {
@@ -290,7 +417,7 @@
 		insertAnimation() {
 			for (let i = 0; i < arguments.length; i++) {
 				if (head.innerHTML.search(arguments[i]) === -1) {
-					head.innerHTML += `<style>${arguments[i]}</style>`;
+					head.insertAdjacentHTML('beforeend', `<style>${arguments[i]}</style>`);
 				}
 			}		
 		}
