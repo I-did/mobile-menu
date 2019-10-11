@@ -7,7 +7,6 @@
 		window.SimpleMenu = factory();
 	}
 })(function() {
-	// + "close with scrolling" and "close with esc"
 	// + swipes to left, to right, to bottom, to top
 	// + fixing header
 	let _,
@@ -281,22 +280,40 @@
 					if (_.overlay) {
 						_.overlay.open();
 					}
+					if (__.tag.scrollHeight > __.tag.offsetHeight && __.tag.scrollTop > 0) {
+						__.tag.scrollTo(0,0);
+					}
 					__.tag.dispatchEvent(new Event('beforeopen'));
 					__.tag.addEventListener('animationend', function() {
 							__.tag.dispatchEvent(new Event('open'));
 							__.opened = true;
 							window.addEventListener('resize', __.close, {once: true});
+							if (!opt.pageScrolling) {
+								window.addEventListener('scroll', __.close);
+							}
+							if (opt.esc) {
+								document.addEventListener('keyup', __.close);
+							}
 							_.closeBtn.tag.addEventListener('click', __.close);
 							_.overlay.tag.addEventListener('click', __.close);
 					}, {once: true});
 				};
 
 				__.close = function() {
+					if (event && event.type === 'keyup' && event.keyCode !== 27) {
+						return;
+					}
 					_.setAnimationFor(__, __.animationOut);
 					_.closeBtn.tag.removeEventListener('click', __.close);
 					_.overlay.tag.removeEventListener('click', __.close);
+					if (!opt.pageScrolling) {
+								window.removeEventListener('scroll', __.close);
+							}
 					if (_.overlay) {
 						_.overlay.close();
+					}
+					if (opt.esc) {
+						document.removeEventListener('keyup', __.close);
 					}
 					window.removeEventListener('resize', __.close);
 					__.tag.dispatchEvent(new Event('beforeclose'));
@@ -308,6 +325,7 @@
 							_.openBtn.tag.addEventListener('click', __.open);
 					}, {once:true});
 				};
+
 
 				if (!opt.fade) {
 					let wrap = __.container = document.createElement('div');
@@ -379,8 +397,6 @@
 			_.closeBtn.tag.addEventListener('click', __.close);
 			__.actived = true;
 		}
-
-
 
 		init() {
 
