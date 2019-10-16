@@ -59,9 +59,15 @@ window.addEventListener('DOMContentLoaded', function(){
 		//menu: '.menu',
 		menu: {
 			selector: '#menu',
+			animationDuration: 0.5
+		},
+		overlay: {
+			animationDuration: 0.5
 		},
 		//overlay: false,
+		//toTop: true,
 		//toBottom: true,
+		//toRight: true,
 		// overlay: {
 		// 	selector: '#overlay',
 		// 	bgc: 'red',
@@ -84,8 +90,8 @@ window.addEventListener('DOMContentLoaded', function(){
 			//removeClass: 'animationstart'
 		},
 		//mediaQuery: '(max-width: 1000px)',
-		fade: true
-		//desktop: false
+		//fade: true
+		desktop: true
 	});
 
 	console.log(menu);
