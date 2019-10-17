@@ -426,17 +426,22 @@
 				if (!opt.fade) {
 					let wrap = __.container = document.createElement('div');
 
-					wrap.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100vh;overflow:hidden;';
+					wrap.style.cssText = 'position:absolute;overflow:hidden;';
 					wrap.style.top = getComputedStyle(__.tag).top;
 					wrap.style.bottom = getComputedStyle(__.tag).bottom;
+					wrap.style.zIndex = getComputedStyle(__.tag).zIndex;
 					
 					__.contained = false;
 					__.tag.style.top = 0;
+					__.tag.style.bottom = 'auto';
 					__.parent = __.tag.parentElement;
 
 					__.open.container = function() {
 						if (!__.contained) {
 							wrap.style.height = `${__.tag.offsetHeight}px`;
+							wrap.style.width = `${__.tag.offsetWidth}px`;
+							wrap.style.left = getComputedStyle(__.tag).left;
+							wrap.style.right = getComputedStyle(__.tag).right;
 							__.parent.appendChild(wrap);
 							wrap.appendChild(__.tag);
 							__.contained = true;							
@@ -487,9 +492,9 @@
 					__.open.container = () => false;
 				}
 				_.restoreEvents();
-
 				return menu;
 			})();
+
 		}
 
 		destroyEvents() {
