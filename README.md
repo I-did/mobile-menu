@@ -12,7 +12,7 @@ window.addEventListener('DOMContentLoaded', function(){
 });
 ```
 
-## Settings of buttons
+## Buttons settings
 ```javascript
 openBtn: {   // or closeBtn
   selector: 'css-selector',      // any CSS-selector
