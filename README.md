@@ -4,11 +4,11 @@ Mobile menu with touch events.
 ```javascript
 'use strict'
 window.addEventListener('DOMContentLoaded', function(){
-	let sideMenu = new SimpleMenu({
-		menu: 'css-selector' ,
-		openBtn: 'css-selector',
-		closeBtn: 'css-selector'
-	});
+  let sideMenu = new SimpleMenu({
+    menu: 'css-selector' ,
+    openBtn: 'css-selector',
+    closeBtn: 'css-selector'
+  });
 });
 ```
 
