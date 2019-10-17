@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="./css/style.css">
+	<title>SimpleMenu</title>
+</head>
+<body>
+	<header class="hdr">
+		<div class="logo">LOGO</div>
+		<nav class="nav">
+			<a href="#" class="nav-link">Home</a>
+			<a href="#" class="nav-link">About</a>
+			<a href="#" class="nav-link">Catalog</a>
+			<a href="#" class="nav-link">Production</a>
+			<a href="#" class="nav-link">Contacts</a>
+		</nav>
+		<button type="button" class="open-menu-btn"></button>
+		<aside class="menu" id="menu">
+			<header class="menu-hdr">
+				<button type="button" class="close-menu-btn">&times;</button>
+				<a href="#" class="menu-tel">+7(111) 122-12-22</a>
+			</header>
+			<nav class="menu-nav">
+				<a href="#" class="menu-nav-link">Nav-link-1</a>
+				<a href="#" class="menu-nav-link">Nav-link-2</a>
+				<a href="#" class="menu-nav-link">Nav-link-3</a>
+				<a href="#" class="menu-nav-link">Nav-link-4</a>
+				<a href="#" class="menu-nav-link">Nav-link-5</a>
+				<a href="#" class="menu-nav-link">Nav-link-6</a>
+				<a href="#" class="menu-nav-link">Nav-link-7</a>
+				<a href="#" class="menu-nav-link">Nav-link-8</a>
+				<a href="#" class="menu-nav-link">Nav-link-9</a>
+				<a href="#" class="menu-nav-link">Nav-link-10</a>
+				<a href="#" class="menu-nav-link">Nav-link-11</a>
+				<a href="#" class="menu-nav-link">Nav-link-12</a>
+			</nav>
+		</aside>
+	</header>
+
+
+	<section class="first-sect">
+		<h1 class="first-sect-title">lorem ipsum dolor.</h1>
+		<p class="first-sect-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias ipsa placeat eligendi autem repellat odit, aliquid, nesciunt, non sequi esse quis perferendis?</p>
+		<p class="first-sect-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam quam perspiciatis dignissimos magnam officia, repudiandae et, eius unde numquam pariatur qui eum laborum consectetur! Eaque earum fuga omnis, inventore aspernatur sit. Odio libero qui, quia similique, nulla beatae quibusdam ea quasi cum rem quam. Veritatis, sed, perspiciatis? Vitae, et repellendus!</p>
+		<p class="first-sect-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto reprehenderit quae et, repellat voluptatem corporis nihil accusamus modi enim quam repellendus a, ex aliquam quo id quaerat facere sint excepturi impedit maxime unde libero, nesciunt fugiat. Commodi porro eius ex, eos quaerat enim voluptas, soluta ducimus eligendi tempore labore modi eaque aliquam architecto, eum ullam vero harum perferendis officia delectus sapiente. Neque autem, quasi numquam, rerum architecto magnam voluptatibus eum!</p>
+		<p class="first-sect-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure magni, doloremque culpa, voluptates sed blanditiis. Possimus commodi doloremque dolorum vero facilis earum dignissimos ab consequuntur amet beatae obcaecati esse, magnam temporibus modi maxime quasi atque. Iste, enim reiciendis deleniti ipsa doloribus! Facere, saepe temporibus atque a laborum ipsum ullam vel animi, cumque, quisquam amet libero, molestiae. Veritatis, aliquid sit recusandae iusto eos similique pariatur blanditiis perferendis velit, a, hic repellat inventore, quas ab earum modi saepe! Cupiditate omnis, hic odio quis quod cum velit quo fugiat, provident deserunt atque assumenda sunt consequuntur natus ut iste. Tempora repellendus ducimus modi sequi pariatur, itaque id ratione culpa necessitatibus autem laudantium. Rerum voluptatem, error nemo suscipit atque possimus velit repellendus, cum doloremque obcaecati quia ex. Distinctio totam pariatur necessitatibus reiciendis ducimus dolor rem modi eum molestiae saepe, sed officiis excepturi dolorem ipsum quis atque recusandae reprehenderit mollitia officia! Amet quis, ipsam reprehenderit totam iusto sunt fugiat nisi qui nam dolorum facere fugit enim error ea neque atque maiores necessitatibus beatae doloremque. Corporis nostrum laboriosam laborum voluptatibus temporibus fuga explicabo voluptates, ad saepe id neque rerum quas vitae blanditiis odit assumenda mollitia et possimus.</p>
+		<p class="first-sect-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum reiciendis aliquid voluptates inventore sed quae mollitia, perspiciatis quidem aperiam, ad doloremque laudantium placeat id obcaecati quo error, sapiente praesentium? Cum dolorem voluptatibus earum culpa placeat saepe quasi atque aspernatur dicta repellat temporibus, esse assumenda eveniet sapiente deleniti veritatis. Ratione, repellendus voluptatibus aut consequuntur, ipsam quaerat error corporis consequatur magnam voluptate sunt ducimus cum adipisci rem fugiat facere, cumque tempora corrupti. Nihil est laborum eveniet excepturi, suscipit adipisci.</p>
+	</section>
+
+<div class="overlay" id="overlay"></div>
+<script src="SimpleMenu.es5.min.js"></script>
+<script>
+'use strict'
+window.addEventListener('DOMContentLoaded', function(){
+	let menu = new SimpleMenu({
+		//menu: '.menu',
+		menu: {
+			selector: '#menu',
+			// class: 'babive',
+			animationDuration: 0.5,
+			animationTimigFunc: 'ease',
+			// animationIn: {
+			// 	name: 'bounceIn'
+			// },
+			// animationOut: {
+			// 	name: 'bounceOut'
+			// }
+		},
+		//swipe: false,
+		//overlayClick: false,
+		//esc: false,
+		//scrollingPxs: 200,
+		//pageScrolling: true,
+		overlay: {
+			animationDuration: 0.5
+		},
+		//overlay: false,
+		//toTop: true,
+		//toBottom: true,
+		//toRight: true,
+		// overlay: {
+		// 	selector: '#overlay',
+		// 	bgc: 'red',
+		// 	zi: '15',
+		// 	css: 'cursor: pointer'
+		// },
+		//overlay: false,
+		//openBtn: '.open-menu-btn',
+		openBtn: {
+			selector: '.open-menu-btn',
+			class: 'active',
+			//addClass: 'animationstart',
+			//removeClass: 'animationstart'
+			//toggleClass: 'animationend'
+		},
+		closeBtn: {
+			selector: '.close-menu-btn',
+			class: 'actived',
+			//addClass: 'animationend',
+			//removeClass: 'animationstart'
+		},
+		//mediaQuery: '(max-width: 1000px)',
+		//fade: true,
+		desktop: true
+	});
+
+	console.log(menu);
+});
+</script>
+</body>
+</html>
