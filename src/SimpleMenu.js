@@ -7,8 +7,6 @@
 		window.SimpleMenu = factory();
 	}
 })(function() {
-	// + disable scrolling page when menu mouseover
-	// + fixing header
 	let _,
 		__,
 		opt,
@@ -39,8 +37,6 @@
 				menu: {
 					selector: '',
 					class: 'active',
-					animationIn: 'fi',
-					animationOut: 'fo',
 					animationDuration: 0.5,
 					animationTimigFunc: 'ease'
 				},
@@ -77,12 +73,14 @@
 				swipe: true,
 				swipeThreshold: 0.3,
 				pageScrolling: false,
+				scrollingPxs: 50,
+				overlayClick: true,
 				esc: true,
-				fixingHeader: {
-					selector: '',
-					class: '',
-					fixedAnimation: ''
-				}
+				// fixingHeader: {
+				// 	selector: '',
+				// 	class: '',
+				// 	fixedAnimation: ''
+				// }
 			};
 
 			// create options from defaults
@@ -262,6 +260,7 @@
 			_.menu = (function() {
 				let menu = _.findElement(opt.menu, 'Menu');
 				__ = menu;
+				_.tag = __.tag;
 
 				function buttonToggleClass() {
 					for (let btn of arguments) {
@@ -277,7 +276,7 @@
 				}
 
 				buttonToggleClass(_.openBtn, _.closeBtn);
-				__.open = function() {
+				_.open = __.open = function() {
 					__.pageYscroll = pageYOffset;
 					__.tag.classList.add(__.class);
 					__.open.container();
@@ -289,7 +288,7 @@
 						_.overlay.open();
 					}
 					if (navigator.userAgent.search(/edge/i) === -1 && __.tag.scrollHeight > __.tag.offsetHeight && __.tag.scrollTop > 0) {
-						__.tag.scrollTop(0);
+						__.tag.scrollTo(0,0);
 					}
 					__.tag.dispatchEvent(new Event('beforeopen'));
 					__.tag.addEventListener('animationend', function() {
@@ -307,25 +306,28 @@
 							}
 
 							_.closeBtn.tag.addEventListener('click', __.close);
-							_.overlay.tag.addEventListener('click', __.close);
+							if (_.overlay && opt.overlayClick) {
+								_.overlay.tag.addEventListener('click', __.close);
+							}							
 					}, {once: true});
 				};
 
-				__.close = function() {
+				_.close = __.close = function() {
 					if (event && event.type === 'keyup' && event.keyCode !== 27) {
 						return;
 					}
 
 					if (event && event.type === 'scroll') {
-						console.log(event);
-						if (Math.abs(__.pageYscroll - pageYOffset) < 50) {
+						if (Math.abs(__.pageYscroll - pageYOffset) < opt.scrollingPxs) {
 							return;
 						}
 					}
 					_.setAnimationFor(__, __.animationOut);
 
 					_.closeBtn.tag.removeEventListener('click', __.close);
-					_.overlay.tag.removeEventListener('click', __.close);
+					if (_.overlay && opt.overlayClick) {
+						_.overlay.tag.removeEventListener('click', __.close);
+					}
 					__.tag.removeEventListener('touchmove', __.swipeMove);
 					if (!opt.pageScrolling) {
 						window.removeEventListener('scroll', __.close);
@@ -361,7 +363,7 @@
 						posInitX, posFinal,
 						posInitY;
 
-					function swipeStart() {
+					__.swipeStart = function() {
 						__.tag.style.willChange = 'transform';
 						let evt = event.touches[0] || window.event.touches[0];
 
@@ -370,7 +372,7 @@
 
 						__.tag.addEventListener('touchmove', __.swipeMove);
 						__.tag.addEventListener('touchend', () => swipe =	scroll = false, {once: true});
-					}
+					};
 
 					__.swipeMove = function() {
 						let evt = event.touches[0] || window.event.touches[0];
@@ -381,7 +383,7 @@
 						posX1 = evt.clientX.toFixed();
 
 						if (!swipe && !scroll) {
-							if (Math.abs(posY2) > 10) {
+							if (Math.abs(posY2) > 9) {
 								console.log('scroll');
 								scroll = true;
 							} else if (Math.abs(posY2) < 5) {
@@ -391,18 +393,18 @@
 						}
 
 						if (swipe && (opt.toLeft && posX1 > posInitX) || (opt.toRight && posX1 < posInitX)) {
-							__.tag.addEventListener('touchend', swipeEnd);
+							__.tag.addEventListener('touchend', __.swipeEnd);
 							__.tag.style.transform = `translateX(${__.getTransform() - posX2}px)`;
 						} else if (scroll && (opt.toBottom && __.tag.offsetHeight + __.tag.scrollTop >= __.tag.scrollHeight && posY1 < posInitY) || (opt.toTop && __.tag.scrollTop === 0 && posY1 > posInitY)) {
 							event.preventDefault();
-							__.tag.addEventListener('touchend', swipeEnd);
+							__.tag.addEventListener('touchend', __.swipeEnd);
 							__.tag.style.transform = `translateY(${__.getTransform() - posY2}px)`;
 						}
 
 					};
 
-					function swipeEnd() {
-						__.tag.removeEventListener('touchend', swipeEnd);
+					__.swipeEnd = function() {
+						__.tag.removeEventListener('touchend', __.swipeEnd);
 						posFinal = __.getTransform();
 						let posThreshold = __.width * opt.swipeThreshold;
 						if (Math.abs(posFinal) >= posThreshold) {
@@ -413,9 +415,11 @@
 
 							__.tag.addEventListener('transitionend', () => __.tag.style.transition = '', {once: true});
 						}
-					}
+					};
 
-					__.tag.addEventListener('touchstart', swipeStart);
+					if (opt.swipe) {
+						__.tag.addEventListener('touchstart', __.swipeStart);
+					}					
 				}
 
 
@@ -472,10 +476,18 @@
 						__.tag.style.top = 'auto';
 					}
 				} else {
+					if (!opt.menu.animationIn && !opt.menu.animationOut) {
+						_.buildAnimation(__, ['fi', 'fo'], ['opacity:0', 'opacity:1']);
+					} else {
+						if (!opt.menu.animationIn || !opt.menu.animationOut) {
+							console.error('Add another animaion!');
+							return;
+						}
+					}
 					__.open.container = () => false;
 				}
-				// _.insertAnimation(opt.animationIn);
 				_.restoreEvents();
+
 				return menu;
 			})();
 		}
@@ -526,22 +538,24 @@
 			}
 		}
 
-
 		setAnimationFor(elem, anim) {
-			let animTag = document.createElement('style');
+			let animTag;
+			if (anim.key) {
+				animTag = document.createElement('style');
 
 				animTag.textContent = (anim === __.animationOut) ? anim.key.replace(/\(.*?\)/, `(${__.getTransform()})`) : anim.key;
 
 				head.appendChild(animTag);
+			}
 
 			elem.tag.style.animation = `${anim.name} ${elem.animationDuration}s ${elem.animationTimigFunc}`;
 			elem.tag.addEventListener('animationend', () => {
 				elem.tag.style.animation = '';
-				head.removeChild(animTag);
+				if (anim.key) {
+					head.removeChild(animTag);
+				}
 			}, {once: true});
 		}
-
-
 
 
 	}

@@ -59,8 +59,21 @@ window.addEventListener('DOMContentLoaded', function(){
 		//menu: '.menu',
 		menu: {
 			selector: '#menu',
-			animationDuration: 0.5
+			// class: 'babive',
+			animationDuration: 0.5,
+			animationTimigFunc: 'linear'
+			// animationIn: {
+			// 	name: 'bounceIn'
+			// },
+			// animationOut: {
+			// 	name: 'bounceOut'
+			// }
 		},
+		//swipe: false,
+		//overlayClick: false,
+		//esc: false,
+		//scrollingPxs: 200,
+		//pageScrolling: true,
 		overlay: {
 			animationDuration: 0.5
 		},
@@ -90,7 +103,7 @@ window.addEventListener('DOMContentLoaded', function(){
 			//removeClass: 'animationstart'
 		},
 		//mediaQuery: '(max-width: 1000px)',
-		//fade: true
+		//fade: true,
 		desktop: true
 	});
 
