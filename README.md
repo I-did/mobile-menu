@@ -1,5 +1,5 @@
 # Simple mobile menu
-Mobile menu with touch events.
+Mobile menu with touch events. Native JavaScript. IE support (soon). Media query. Closing with swipemenu, scrollpage, overlayclick, esc. Custom animation. Open and close func. 'beforeopen', 'beforeclose', 'open', 'close' events.
 ## Simple usage
 ```javascript
 'use strict'
