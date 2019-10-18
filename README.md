@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', function(){
   });
 });
 ```
-
+Example [simple usage](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toLeft).html)
 ## Main settings
 ### Media query
 ```javascript

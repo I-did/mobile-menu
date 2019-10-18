@@ -143,10 +143,10 @@
 									_.restoreEvents();
 								}
 							} else {
-								_.buldMenu();
+								_.buildMenu();
 							}
 						} else {
-							_.buldMenu();
+							_.buildMenu();
 						}			
 					} else {
 						if (event && event.type === 'resize') {
@@ -161,7 +161,7 @@
 					// if desktop true (no media)
 						// if !resize -> build menu
 					if (!event) {
-						_.buldMenu();
+						_.buildMenu();
 					}
 				}
 			} else {
@@ -190,10 +190,10 @@
 								_.restoreEvents();
 							}
 						} else {
-							_.buldMenu();
+							_.buildMenu();
 						}
 					} else {
-						_.buldMenu();
+						_.buildMenu();
 					}
 				} else {
 					if (event && event.type === 'resize') {
@@ -205,9 +205,20 @@
 					}
 				}
 			}
+			// _.reload = function() {
+			// 	delete _.close;
+			// 	delete _.open;
+			// 	delete _.tag;
+			// 	delete _.openBtn;
+			// 	delete _.closeBtn;
+			// 	delete _.menu;
+			// 	delete _.overlay;
+				
+			// 	_.buildMenu();
+			// };
 		}
 
-		buldMenu() {
+		buildMenu() {
 			_.init();
 			_.initOverlay();
 			_.initMenu();
@@ -266,10 +277,10 @@
 					for (let btn of arguments) {
 						if (btn.class) {
 							if (btn.toggleClass) {
-								__.tag.addEventListener(btn.toggleClass, () => btn.tag.classList.toggle(btn.class));
+								__.tag.addEventListener(btn.toggleClass, function toggleClass() {btn.tag.classList.toggle(btn.class)});
 							} else {
-								__.tag.addEventListener((btn.addClass === 'animationstart') ? 'beforeopen' : 'open', () => btn.tag.classList.add(btn.class));
-								__.tag.addEventListener((btn.removeClass === 'animationstart') ? 'beforeclose' : 'close', () => btn.tag.classList.remove(btn.class));
+								__.tag.addEventListener((btn.addClass === 'animationstart') ? 'beforeopen' : 'open', function addClass() {btn.tag.classList.add(btn.class)});
+								__.tag.addEventListener((btn.removeClass === 'animationstart') ? 'beforeclose' : 'close', function removeClass() {btn.tag.classList.remove(btn.class)});
 							}
 						}
 					}
@@ -510,7 +521,6 @@
 		}
 
 		init() {
-
 			_.openBtn = (function() {
 				let btn = _.findElement(opt.openBtn, 'Open button(s)');
 				return btn;

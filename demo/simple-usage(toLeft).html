@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="../src/highlight.js/styles/atom-one-dark.css"><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="../src/highlight.js/highlight.pack.js"></script>
+	<title>Simple usage</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		body {
+			position: relative;
+		}
+		.hdr {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 15px 0;
+			position: relative;
+		}
+		pre {margin-bottom: 0;}
+		
+		.side-menu-btn-open,.side-menu-btn-close {
+			border: none;
+			background: none;
+		}
+		.side-menu-btn-open:focus,.side-menu-btn-close:focus {
+			outline: none;
+		}
+		.side-menu-btn-open:active,.side-menu-btn-close:active {
+			transform: scale(.925);
+		}
+		.side-menu-btn-open {
+			width: 26px;
+			height: 20px;
+			background: url('https://www.iconfinder.com/icons/134216/download/png/128') center/cover no-repeat;
+		}
+		.side-menu-btn-close{
+			text-decoration: underline;
+		}
+		.side-menu {
+			padding: 20px;
+			border: 1px solid #000;
+			background-color: #fff;
+			width: 320px;
+			max-width: 320px;
+			position: absolute;
+			top: 0;
+			display: none;
+			z-index: 30;
+		}
+		.side-menu.active {
+			display: block;
+		}
+		.side-menu-hdr {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 20px;
+		}
+		.side-menu>.nav {
+			width: 100%;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<header class="hdr container">
+		<a href="#" class="logo">LOGO</a>
+		<nav class="nav">
+			<a href="#" class="nav-link">Link 1</a>
+			<a href="#" class="nav-link">Link 2</a>
+			<a href="#" class="nav-link">Link 3</a>
+			<a href="#" class="nav-link">Link 4</a>
+			<a href="#" class="nav-link">Link 5</a>
+		</nav>
+		<button class="side-menu-btn-open" type="button"></button>
+	</header>
+	<aside class="side-menu">
+		<nav class="nav flex-column justify-content-center">
+			<header class="side-menu-hdr">
+				<a href="#" class="logo">LOGO</a>
+				<button type="button" class="side-menu-btn-close">close</button>
+			</header>
+			<a href="#" class="nav-link">Link 1</a>
+			<a href="#" class="nav-link">Link 2</a>
+			<a href="#" class="nav-link">Link 3</a>
+			<a href="#" class="nav-link">Link 4</a>
+			<a href="#" class="nav-link">Link 5</a>
+		</nav>
+	</aside>
+		<div class="code-block">
+<pre><code class="plaintext">HTML:</code></pre>
+<pre><code class="html">&lt;body&gt;
+  &lt;header class="hdr container"&gt;...&lt;/header&gt;
+  &lt;aside class="side-menu"&gt;...&lt;/aside&gt;
+&lt;/body&gt;</code></pre>
+	</div>
+	<div class="code-block">
+		<div class="code-block">
+<pre><code class="plaintext">CSS:</code></pre>
+<pre><code class="css">.side-menu{
+  display: none;
+  position: absolute;
+  top: 0;
+  z-index: 30;
+}
+.side-menu.active{
+  display: block;
+}
+
+});</code></pre>
+	</div>
+	<div class="code-block">
+<pre><code class="plaintext">JS:</code></pre>
+<pre><code class="js">let mobileMenu = new SimpleMenu({
+  menu: '.side-menu',
+  openBtn: '.side-menu-btn-open',
+  closeBtn: '.side-menu-btn-close',
+  desktop: true
+  // defaults
+   //toLeft: true
+   //menu class toggle 'active'
+   //openBtn class toggle ''
+   //closeBtn class toggle ''
+   //overlay: true
+   //overlayClick: true
+   //esc: true
+   //pageScrolling: false
+   //scrollingPxs: 50
+   //swipe: true
+   //swipeThreshold: 0.3
+});</code></pre>
+	</div>
+
+	<script src="../dist/SimpleMenu.es5.min.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function(){
+			let mobileMenu = new SimpleMenu({
+  			menu: '.side-menu',
+  			openBtn: '.side-menu-btn-open',
+  			closeBtn: '.side-menu-btn-close',
+  			desktop: true
+			});
+			console.log(mobileMenu);
+		});
+	</script>
+</body>
+</html>

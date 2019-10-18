@@ -16,6 +16,7 @@
 			<a href="#" class="nav-link">Catalog</a>
 			<a href="#" class="nav-link">Production</a>
 			<a href="#" class="nav-link">Contacts</a>
+			<button type="button" class='reload'>reload</button>
 		</nav>
 		<button type="button" class="open-menu-btn"></button>
 		<aside class="menu" id="menu">
@@ -106,7 +107,11 @@ window.addEventListener('DOMContentLoaded', function(){
 		//fade: true,
 		desktop: true
 	});
-
+	let reload = document.querySelector('.reload');
+	reload.addEventListener('click', function() {
+		menu.reload();
+		console.log(menu);
+	});
 	console.log(menu);
 });
 </script>
