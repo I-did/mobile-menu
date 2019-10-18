@@ -29,6 +29,7 @@ toRight: false   // it's default
 toBottom: false  // it's default
 toTop: false     // it's default
 ```
+Example with [toBottom](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toBottom).html)
 ## Other settings
 
 ### Buttons settings

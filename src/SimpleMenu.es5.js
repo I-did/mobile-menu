@@ -359,6 +359,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             _.setAnimationFor(__, __.animationIn);
 
             _.openBtn.tag.removeEventListener('click', __.open);
+            _.closeBtn.tag.addEventListener('click', __.close);
 
             if (_.overlay) {
               _.overlay.open();
@@ -638,7 +639,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       value: function restoreEvents() {
         _.openBtn.tag.addEventListener('click', __.open);
 
-        _.closeBtn.tag.addEventListener('click', __.close);
+        // _.closeBtn.tag.addEventListener('click', __.close);
 
         __.actived = true;
       }

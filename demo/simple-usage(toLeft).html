@@ -16,11 +16,21 @@
 		body {
 			position: relative;
 		}
+		.code {
+			max-width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			background: #282c34;
+
+		}
+		.code-block {
+			max-width: 100%;
+		}
 		.hdr {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			padding: 15px 0;
+			padding: 15px;
 			position: relative;
 		}
 		pre {margin-bottom: 0;}
@@ -98,15 +108,15 @@
 			<a href="#" class="nav-link">Link 5</a>
 		</nav>
 	</aside>
-		<div class="code-block">
+	<div class="code">
+<div class="code-block">
 <pre><code class="plaintext">HTML:</code></pre>
 <pre><code class="html">&lt;body&gt;
   &lt;header class="hdr container"&gt;...&lt;/header&gt;
   &lt;aside class="side-menu"&gt;...&lt;/aside&gt;
 &lt;/body&gt;</code></pre>
-	</div>
+</div>
 	<div class="code-block">
-		<div class="code-block">
 <pre><code class="plaintext">CSS:</code></pre>
 <pre><code class="css">.side-menu{
   display: none;
@@ -117,8 +127,7 @@
 .side-menu.active{
   display: block;
 }
-
-});</code></pre>
+</code></pre>
 	</div>
 	<div class="code-block">
 <pre><code class="plaintext">JS:</code></pre>
@@ -140,6 +149,7 @@
    //swipe: true
    //swipeThreshold: 0.3
 });</code></pre>
+	</div>
 	</div>
 
 	<script src="../dist/SimpleMenu.es5.min.js"></script>

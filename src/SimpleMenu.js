@@ -295,6 +295,7 @@
 					 _.setAnimationFor(__, __.animationIn);
 					
 					_.openBtn.tag.removeEventListener('click', __.open);
+					_.closeBtn.tag.addEventListener('click', __.close);
 					if (_.overlay) {
 						_.overlay.open();
 					}
@@ -516,7 +517,7 @@
 
 		restoreEvents() {
 			_.openBtn.tag.addEventListener('click', __.open);
-			_.closeBtn.tag.addEventListener('click', __.close);
+			// _.closeBtn.tag.addEventListener('click', __.close);
 			__.actived = true;
 		}
 

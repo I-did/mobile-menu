@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="../src/highlight.js/styles/atom-one-dark.css"><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="../src/highlight.js/highlight.pack.js"></script>
+	<title>Simple usage (toBottom)</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		.code {
+			max-width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			background: #282c34;
+		}
+		.code-block {
+			max-width: 100%;
+		}
+		.hdr {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			padding-top: 15px;
+			padding-bottom: 15px;
+			position: relative;
+			background-color: #fff;
+			z-index: 11;
+		}
+		pre {margin-bottom: 0;}		
+		.side-menu-btn-open,.side-menu-btn-close {border: none;background: none;}
+		.side-menu-btn-open:focus,.side-menu-btn-close:focus {outline: none;}
+		.side-menu-btn-open:active,.side-menu-btn-close:active {transform: scale(.925);}
+		.side-menu-btn-open {
+			width: 26px;
+			height: 20px;
+			margin: 0 10% 0 5%;
+			position: relative;
+		}
+		.side-menu-btn-close {text-decoration: underline;}
+		.side-menu {
+			padding: 20px;
+			border: 1px solid #000;
+			background-color: #fff;
+			width: 320px;
+			max-width: 320px;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			display: none;
+			z-index: 11;
+		}
+		.side-menu.active {display: block;}
+		.side-menu>.nav {
+			width: 100%;
+			text-align: center;
+		}
+		.side-menu-btn-open {
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 35px;
+			height: 30px;
+			cursor: pointer;
+			transition: .4s;
+		}
+		.burger-line {
+			display: block;
+			position: relative;
+			background: #000;
+			width: 24px;
+			height: 3px;
+			transition: .4s;
+		}
+    .burger-line::after,
+    .burger-line::before {
+			content: "";
+			display: block;
+			position: absolute;
+			background: #000;
+			width: 100%;
+			height: 3px;
+			transition: .4s;
+		}
+    .burger-line::after {top: 8px;}
+    .burger-line::before {top: -8px;}
+  	.side-menu-btn-open.active>.burger-line {background: transparent;}
+		.side-menu-btn-open.active>.burger-line::before,.side-menu-btn-open.active>.burger-line::after {top: 0;}
+		.side-menu-btn-open.active>.burger-line::after {transform: rotate(-45deg);}
+		.side-menu-btn-open.active>.burger-line::before {transform: rotate(45deg);}
+
+		header,section,footer {
+			padding: 0 15px;
+		}
+		
+		@media (min-width: 575.98px){
+		header,section,footer {
+			padding: 0 calc(100vw - (50% + 270px));
+		}}
+		
+		@media (min-width: 767.98px){
+		header,section,footer {
+			padding: 0 calc(100vw - (50% + 360px));
+		}}
+		
+		@media (min-width: 991.98px) {
+		header,section,footer{
+			padding: 0 calc(100vw - (50% + 480px));
+		}}
+		
+		@media (min-width: 1199.98px){
+		header,section,footer {
+			padding: 0 calc(100vw - (50% + 570px));
+		}}
+	</style>
+</head>
+<body>
+	<script>hljs.initHighlightingOnLoad();</script>
+	<header class="hdr">
+		<a href="#" class="logo">LOGO</a>
+		<button type="button" class="burger-btn side-menu-btn-open">
+			<span class="burger-line"></span>
+		</button>
+		<nav class="nav">
+			<a href="#" class="nav-link">Link 1</a>
+			<a href="#" class="nav-link">Link 2</a>
+			<a href="#" class="nav-link">Link 3</a>
+			<a href="#" class="nav-link">Link 4</a>
+			<a href="#" class="nav-link">Link 5</a>
+			<a href="#" class="nav-link">Link 6</a>
+		</nav>
+		<aside class="side-menu">
+			<nav class="nav flex-column justify-content-center">
+				<a href="#" class="nav-link">Link 1</a>
+				<a href="#" class="nav-link">Link 2</a>
+				<a href="#" class="nav-link">Link 3</a>
+				<a href="#" class="nav-link">Link 4</a>
+				<a href="#" class="nav-link">Link 5</a>
+			</nav>
+		</aside>
+	</header>
+	
+	<div class="code">
+<div class="code-block">
+<pre><code class="plaintext">HTML:</code></pre>
+<pre><code class="html">&lt;body&gt;
+  &lt;header class="hdr container"&gt;
+    &lt;aside class="side-menu"&gt;
+      ...
+    &lt;/aside&gt;
+  &lt;/header&gt;
+  
+&lt;/body&gt;</code></pre>
+</div>
+	<div class="code-block">
+<pre><code class="plaintext">CSS:</code></pre>
+<pre><code class="css">.hdr {
+  position: relative;
+  z-index: 11;
+}
+.side-menu{
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 11;
+}
+.side-menu.active{
+  display: block;
+}
+</code></pre>
+	</div>
+	<div class="code-block">
+<pre><code class="plaintext">JS:</code></pre>
+<pre><code class="js">let mobileMenu = new SimpleMenu({
+  menu: '.side-menu',
+  openBtn: {
+    selector: '.side-menu-btn-open',
+    class: 'active'
+  },
+  closeBtn: '.side-menu-btn-open',
+  desktop: true,
+  toBottom: true
+  // defaults
+   //menu class toggle 'active'
+   //overlay: true
+   //overlayClick: true
+   //esc: true
+   //pageScrolling: false
+   //scrollingPxs: 50
+   //swipe: true
+   //swipeThreshold: 0.3
+});</code></pre>
+	</div>
+	</div>
+
+	<!-- <script src="../dist/SimpleMenu.es5.min.js"></script> -->
+	<script src="../src/SimpleMenu.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function(){
+			let mobileMenu = new SimpleMenu({
+  			menu: '.side-menu',
+  			openBtn: {
+  				selector: '.side-menu-btn-open',
+  				class: 'active'
+  			},
+  			closeBtn: '.side-menu-btn-open',
+  			desktop: true,
+  			toBottom: true
+			});
+			console.log(mobileMenu);
+		});
+	</script>
+</body>
+</html>
