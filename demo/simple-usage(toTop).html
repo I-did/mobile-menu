@@ -10,9 +10,65 @@
 	<script src="../src/highlight.js/highlight.pack.js"></script>
 	<title>Simple usage (toBottom)</title>
 </head>
-<body class="to-bottom">
+<body class="to-top">
 	<script>hljs.initHighlightingOnLoad();</script>
 	<header class="hdr">
+		<a href="#" class="logo">LOGO</a>
+		<a href="#" class="tel">+7(999)112-14-33</a>
+	</header>
+	<div class="code">
+<div class="code-block">
+<pre><code class="plaintext">HTML:</code></pre>
+<pre><code class="html">&lt;body&gt;
+  &lt;footer class="ftr"&gt;
+    ... btn.side-menu-btn-open
+    &lt;aside class="side-menu"&gt;
+      ... btn.side-menu-btn-close
+    &lt;/aside&gt;
+  &lt;/footer&gt;  
+&lt;/body&gt;</code></pre>
+</div>
+	<div class="code-block">
+<pre><code class="plaintext">CSS:</code></pre>
+<pre><code class="css">.ftr {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+.side-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  z-index: 11;
+}
+.side-menu.active {
+  display: block;
+}
+</code></pre>
+	</div>
+	<div class="code-block">
+<pre><code class="plaintext">JS:</code></pre>
+<pre><code class="js">let mobileMenu = new SimpleMenu({
+  menu: '.side-menu',
+  openBtn: '.side-menu-btn-open',
+  closeBtn: '.side-menu-btn-close',
+  desktop: true,
+  toTop: true
+  // defaults
+   //menu class toggle 'active'
+   //openBtn class toggle ''
+   //closeBtn class toggle ''
+   //overlay: true
+   //overlayClick: true
+   //esc: true
+   //pageScrolling: false
+   //scrollingPxs: 50
+   //swipe: true
+   //swipeThreshold: 0.3
+});</code></pre>
+	</div>
+	</div>
+<footer class="ftr">
 		<a href="#" class="logo">LOGO</a>
 		<button type="button" class="side-menu-btn-open">
 			<span class="line line-top"></span>
@@ -36,58 +92,7 @@
 				<a href="#" class="side-menu-nav-link">Contacts</a>
 			</nav>
 		</aside>
-	</header>
-	<div class="code">
-<div class="code-block">
-<pre><code class="plaintext">HTML:</code></pre>
-<pre><code class="html">&lt;body&gt;
-  &lt;header class="hdr"&gt;
-    ... btn.side-menu-btn-open
-    &lt;aside class="side-menu"&gt;
-      ... btn.side-menu-btn-close
-    &lt;/aside&gt;
-  &lt;/header&gt;  
-&lt;/body&gt;</code></pre>
-</div>
-	<div class="code-block">
-<pre><code class="plaintext">CSS:</code></pre>
-<pre><code class="css">.hdr {
-  z-index: 11;
-}
-.side-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  z-index: 11;
-}
-.side-menu.active {
-  display: block;
-}
-</code></pre>
-	</div>
-	<div class="code-block">
-<pre><code class="plaintext">JS:</code></pre>
-<pre><code class="js">let mobileMenu = new SimpleMenu({
-  menu: '.side-menu',
-  openBtn: '.side-menu-btn-open',
-  closeBtn: '.side-menu-btn-close',
-  desktop: true,
-  toBottom: true
-  // defaults
-   //menu class toggle 'active'
-   //openBtn class toggle ''
-   //closeBtn class toggle ''
-   //overlay: true
-   //overlayClick: true
-   //esc: true
-   //pageScrolling: false
-   //scrollingPxs: 50
-   //swipe: true
-   //swipeThreshold: 0.3
-});</code></pre>
-	</div>
-	</div>
-
+	</footer>
 	<script src="../src/SimpleMenu.js"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function(){
@@ -96,7 +101,7 @@
 	  			openBtn: '.side-menu-btn-open',
 	  			closeBtn: '.side-menu-btn-close',
 	  			desktop: true,
-	  			toBottom: true
+	  			toTop: true
 			});
 		});
 	</script>

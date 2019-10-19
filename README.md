@@ -1,15 +1,32 @@
 # Simple mobile menu
-Mobile menu with touch events. Native JavaScript. IE support (soon). Media query. Closing with swipemenu, scrollpage, overlayclick, esc. Custom animation. Open and close func. 'beforeopen', 'beforeclose', 'open', 'close' events.
+
 ## Simple usage
+Just add the `script` tag before closing `<body>`:
+```html
+<script src="SimpleMenu.min.js"></script>
+```
+In case IE (or other old browsers) support is needed:
+```html
+<script src="SimpleMenu.es5.min.js"></script>
+```
+Then add a few required settings:
 ```javascript
 'use strict'
 window.addEventListener('DOMContentLoaded', function(){
   let sideMenu = new SimpleMenu({
     menu: 'css-selector' ,    // it's reqiured
     openBtn: 'css-selector',  // it's reqiured
-    closeBtn: 'css-selector'  // it's reqiured
   });
 });
+```
+
+```css
+.css-selector-menu {
+  display: none;
+}
+.css-selector-menu.active {
+  display: initial; \\block || flex || etc
+}
 ```
 Example [simple usage](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toLeft).html)
 ## Main settings
@@ -30,7 +47,9 @@ toBottom: false  // it's default
 toTop: false     // it's default
 ```
 Example with [toBottom](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toBottom).html)
+Example with [toTop](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toTop).html)
 Example with [toLeft](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toLeft).html)
+Example with [toRight](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toRight).html)
 ## Other settings
 
 ### Buttons settings
@@ -72,11 +91,6 @@ overlay: false
 ### Swipes
 ### Fade mode
 ### Custom animation
-### For old browsers
-In case IE support is needed:
-```html
-<script src="SimpleMenu.es5.min.js"></script>
-```
 ### All settings
 ```javascript
 'use strict'

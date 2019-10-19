@@ -28,7 +28,6 @@
 	  };
 	}
 
-
 	class SimpleMenu {
 		constructor(options) {
 			_ = this;
@@ -75,12 +74,8 @@
 				pageScrolling: false,
 				scrollingPxs: 50,
 				overlayClick: true,
-				esc: true,
-				// fixingHeader: {
-				// 	selector: '',
-				// 	class: '',
-				// 	fixedAnimation: ''
-				// }
+				container: true,
+				esc: true
 			};
 
 			// create options from defaults
@@ -106,11 +101,15 @@
 				opt.desktop = true;
 			}
 
+			if (opt.fade) {
+				opt.swipe = false;
+				opt.container = false;
+			}
+
 			delete _.defaults;
 			_.checkMedia();			
 
 			window.addEventListener('resize', debounce(_.checkMedia, 100));
-
 		}
 
 		checkMedia(event) {
@@ -205,17 +204,6 @@
 					}
 				}
 			}
-			// _.reload = function() {
-			// 	delete _.close;
-			// 	delete _.open;
-			// 	delete _.tag;
-			// 	delete _.openBtn;
-			// 	delete _.closeBtn;
-			// 	delete _.menu;
-			// 	delete _.overlay;
-				
-			// 	_.buildMenu();
-			// };
 		}
 
 		buildMenu() {
@@ -235,34 +223,16 @@
 					// if !selector -> build overlay -> open & close with css3 animation
 					// else selector -> querySelector overlay -> open & close with toggle class
 					if (ovl.selector === '') {
+						ovl.isCreated = true;
 						tag = document.createElement('div');
 						tag.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;background:${ovl.bgc};z-index:${ovl.zi};${ovl.css}`;
-						_.buildAnimation(ovl, ['fi', 'fo'], ['opacity:0', 'opacity:1']);
-
-						ovl.open = function() {
-							body.appendChild(this.tag);
-
-							_.setAnimationFor(this, this.animationIn);
-
-						};
-						ovl.close = function() {
-							_.setAnimationFor(this, this.animationOut);
-							tag.addEventListener('animationend', () => {
-								body.removeChild(this.tag);
-							}, {once: true});
-						};
-						
+						_.buildAnimation(ovl, ['fi', 'fo'], ['opacity:0', 'opacity:1']);				
 					} else {
+						ovl.isCreated = false;
 						tag = document.querySelector(ovl.selector || ovl);
-						ovl.open = function() {
-							this.tag.classList.add(ovl.class);
-						};
-						ovl.close = function() {
-							this.tag.classList.remove(ovl.class);
-						};
 					}
 					ovl.tag = tag;
-					return (tag) ? ovl : console.error('You\'r overlay is not found!');
+					return (tag) ? ovl : console.warn('You\'r overlay is not found!');
 				}				
 			})();
 		}
@@ -273,40 +243,81 @@
 				__ = menu;
 				_.tag = __.tag;
 
-				function buttonToggleClass() {
-					for (let btn of arguments) {
-						if (btn.class) {
-							if (btn.toggleClass) {
-								__.tag.addEventListener(btn.toggleClass, function toggleClass() {btn.tag.classList.toggle(btn.class)});
-							} else {
-								__.tag.addEventListener((btn.addClass === 'animationstart') ? 'beforeopen' : 'open', function addClass() {btn.tag.classList.add(btn.class)});
-								__.tag.addEventListener((btn.removeClass === 'animationstart') ? 'beforeclose' : 'close', function removeClass() {btn.tag.classList.remove(btn.class)});
-							}
+				function buttonToggleClass(btn) {
+					if (btn.class) {
+						if (btn.toggleClass) {
+							__.tag.addEventListener(btn.toggleClass, function() {
+								btn.tag.classList.toggle(btn.class);
+							});
+						} else {
+							__.tag.addEventListener((btn.addClass === 'animationstart') ? 'beforeopen' : 'open', function() {
+								btn.tag.classList.add(btn.class);
+							});
+							__.tag.addEventListener((btn.removeClass === 'animationstart') ? 'beforeclose' : 'close', function() {
+								btn.tag.classList.remove(btn.class);
+							});
 						}
 					}
 				}
 
-				buttonToggleClass(_.openBtn, _.closeBtn);
-				_.open = __.open = function() {
-					__.pageYscroll = pageYOffset;
-					__.tag.classList.add(__.class);
-					__.open.container();
+				buttonToggleClass(_.openBtn);
 
-					 _.setAnimationFor(__, __.animationIn);
-					
-					_.openBtn.tag.removeEventListener('click', __.open);
-					_.closeBtn.tag.addEventListener('click', __.close);
-					if (_.overlay) {
-						_.overlay.open();
-					}
+				if (_.closeBtn) {
+					buttonToggleClass(_.closeBtn);
+				}
+
+				_.open = __.open = function() {
+					let overlay = _.overlay,
+						wrap = __.wrap;
+
+					__.tag.classList.add(__.class);
+
 					if (navigator.userAgent.search(/edge/i) === -1 && __.tag.scrollHeight > __.tag.offsetHeight && __.tag.scrollTop > 0) {
 						__.tag.scrollTo(0,0);
 					}
+
+					__.pageYscroll = pageYOffset;
+
+					if (!__.width) {
+						__.width = __.tag.offsetWidth;
+					}
+					if (!opt.fade) {
+						if (!__.height) {
+							__.height = __.tag.offsetHeight;
+						}
+						if (wrap.style.width !== `${__.width}px`) {
+							wrap.style.width = `${__.width}px`;
+						}
+						if (wrap.style.height !== `${__.height}px`) {
+							wrap.style.height = `${__.height}px`;
+						}
+					}					
+
+				 	_.setAnimationFor(__, __.animationIn);
+
+				 	if (overlay) {
+						if (overlay.isCreated) {
+							_.setAnimationFor(overlay, overlay.animationIn);
+							body.appendChild(overlay.tag);
+						} else {
+							overlay.tag.classList.add(overlay.class);
+						}
+					}
+
+					if (opt.container) {
+						__.parent.appendChild(wrap);
+						wrap.appendChild(__.tag);
+						__.contained = true;	
+					}
+					
+					
+					_.openBtn.tag.removeEventListener('click', __.open);
+					if (_.closeBtn) {
+						_.closeBtn.tag.addEventListener('click', __.close);
+					}										
 					__.tag.dispatchEvent(new Event('beforeopen'));
-					__.tag.addEventListener('animationend', function() {
-							if (!__.width) {
-								__.width = __.tag.offsetWidth;
-							}
+
+					__.tag.addEventListener('animationend', function() {							
 							__.tag.dispatchEvent(new Event('open'));
 							__.opened = true;
 							window.addEventListener('resize', __.close, {once: true});
@@ -316,15 +327,17 @@
 							if (opt.esc) {
 								document.addEventListener('keyup', __.close);
 							}
-
-							_.closeBtn.tag.addEventListener('click', __.close);
-							if (_.overlay && opt.overlayClick) {
-								_.overlay.tag.addEventListener('click', __.close);
+							if (_.closeBtn){
+								_.closeBtn.tag.addEventListener('click', __.close);
+							}
+							if (overlay && opt.overlayClick) {
+								overlay.tag.addEventListener('click', __.close);
 							}							
 					}, {once: true});
 				};
 
 				_.close = __.close = function() {
+					let overlay = _.overlay;
 					if (event && event.type === 'keyup' && event.keyCode !== 27) {
 						return;
 					}
@@ -336,30 +349,49 @@
 					}
 					_.setAnimationFor(__, __.animationOut);
 
-					_.closeBtn.tag.removeEventListener('click', __.close);
-					if (_.overlay && opt.overlayClick) {
-						_.overlay.tag.removeEventListener('click', __.close);
+					if (overlay) {
+						if (overlay.isCreated) {
+							_.setAnimationFor(overlay, overlay.animationOut);
+							overlay.tag.addEventListener('animationend', () => {
+								body.removeChild(overlay.tag);
+							}, {once: true});
+						} else {
+							overlay.tag.classList.remove(overlay.class);
+						}
 					}
-					__.tag.removeEventListener('touchmove', __.swipeMove);
+					// removing events
+					if (_.closeBtn) {
+						_.closeBtn.tag.removeEventListener('click', __.close);
+					}					
+					if (overlay && opt.overlayClick) {
+						overlay.tag.removeEventListener('click', __.close);
+					}
+					if (opt.swipe) {
+						__.tag.removeEventListener('touchmove', __.swipeMove);
+					}					
 					if (!opt.pageScrolling) {
 						window.removeEventListener('scroll', __.close);
-					}
-					if (_.overlay) {
-						_.overlay.close();
 					}
 					if (opt.esc) {
 						document.removeEventListener('keyup', __.close);
 					}
 					window.removeEventListener('resize', __.close);
 					__.tag.dispatchEvent(new Event('beforeclose'));
+					// animationend
 					__.tag.addEventListener('animationend', function() {
-							__.tag.classList.remove(__.class);
-							__.open.container();
-							__.tag.dispatchEvent(new Event('close'));
-							__.opened = false;
-							__.tag.style.transform = '';
-							__.tag.style.willChange = '';
-							_.openBtn.tag.addEventListener('click', __.open);
+						__.tag.dispatchEvent(new Event('close'));
+						_.openBtn.tag.addEventListener('click', __.open);
+						__.opened = false;
+
+						__.tag.classList.remove(__.class);
+						__.tag.style.transform = '';
+						__.tag.style.willChange = '';
+
+						if (opt.container) {
+							__.parent.appendChild(__.tag);
+							__.parent.removeChild(__.wrap);
+							__.contained = false;
+						}
 					}, {once:true});
 				};
 
@@ -396,10 +428,8 @@
 
 						if (!swipe && !scroll) {
 							if (Math.abs(posY2) > 9) {
-								console.log('scroll');
 								scroll = true;
 							} else if (Math.abs(posY2) < 5) {
-								console.log('swipe');
 								swipe = true;
 							}
 						}
@@ -434,35 +464,7 @@
 					}					
 				}
 
-
 				if (!opt.fade) {
-					let wrap = __.container = document.createElement('div');
-
-					wrap.style.cssText = 'position:absolute;overflow:hidden;';
-					wrap.style.top = getComputedStyle(__.tag).top;
-					wrap.style.bottom = getComputedStyle(__.tag).bottom;
-					wrap.style.zIndex = getComputedStyle(__.tag).zIndex;
-					
-					__.contained = false;
-					__.tag.style.top = 0;
-					__.tag.style.bottom = 'auto';
-					__.parent = __.tag.parentElement;
-
-					__.open.container = function() {
-						if (!__.contained) {
-							wrap.style.height = `${__.tag.offsetHeight}px`;
-							wrap.style.width = `${__.tag.offsetWidth}px`;
-							wrap.style.left = getComputedStyle(__.tag).left;
-							wrap.style.right = getComputedStyle(__.tag).right;
-							__.parent.appendChild(wrap);
-							wrap.appendChild(__.tag);
-							__.contained = true;							
-						} else {
-							__.parent.appendChild(__.tag);
-							__.parent.removeChild(wrap);
-							__.contained = false;
-						}
-					};
 					if (!opt.toTop && !opt.toBottom && !opt.toLeft && !opt.toRight) {
 						let windowWidth = window.screen.width,
 							openBtnCoords = {
@@ -475,6 +477,11 @@
 							opt.toRight = true;
 						}
 					}
+					let menuStyles = {};
+					menuStyles.top = getComputedStyle(__.tag).top;
+					menuStyles.bottom = getComputedStyle(__.tag).bottom;
+					menuStyles.left = getComputedStyle(__.tag).left;
+					menuStyles.right = getComputedStyle(__.tag).right;
 					if (opt.toLeft) {
 						_.buildAnimation(__, ['fr', 'tr'], ['translateX(100%)', 'translateX(0%)']);
 						__.tag.style.right = 0;
@@ -492,6 +499,19 @@
 						__.tag.style.bottom = 0;
 						__.tag.style.top = 'auto';
 					}
+
+					let wrap = __.wrap = document.createElement('div');
+					wrap.style.cssText = 'position:absolute;overflow:hidden;';
+					wrap.style.top = menuStyles.top;
+					wrap.style.bottom = menuStyles.bottom;
+					wrap.style.left = menuStyles.left;
+					wrap.style.right = menuStyles.right;
+					wrap.style.zIndex = menuStyles.zIndex;
+					
+					__.contained = false;
+					__.tag.style.top = 0;
+					__.tag.style.bottom = 'auto';
+					__.parent = __.tag.parentElement;
 				} else {
 					if (!opt.menu.animationIn && !opt.menu.animationOut) {
 						_.buildAnimation(__, ['fi', 'fo'], ['opacity:0', 'opacity:1']);
@@ -501,7 +521,6 @@
 							return;
 						}
 					}
-					__.open.container = () => false;
 				}
 				_.restoreEvents();
 				return menu;
@@ -511,13 +530,14 @@
 
 		destroyEvents() {
 			_.openBtn.tag.removeEventListener('click', __.open);
-			_.closeBtn.tag.removeEventListener('click', __.close);
+			if (_.closeBtn) {
+				_.closeBtn.tag.removeEventListener('click', __.close);
+			}
 			__.actived = false;
 		}
 
 		restoreEvents() {
 			_.openBtn.tag.addEventListener('click', __.open);
-			// _.closeBtn.tag.addEventListener('click', __.close);
 			__.actived = true;
 		}
 
@@ -535,15 +555,14 @@
 
 			if (elem.selector !== '') {
 				tag = document.querySelector(elem.selector);
-			} else console.error(`${errorName} selector is empty!`);
+			} else console.warn(`${errorName} selector is empty!`);
 
 			elem.tag = tag;
 
-			return (tag) ? elem : console.error(`${errorName} is not found!`);
+			return (tag) ? elem : console.warn(`${errorName} is not found!`);
 		}
 
 		buildAnimation(elem, names, keyframes) {
-
 			let arr = ['animationIn', 'animationOut'];
 			for (let i = 0; i < names.length; i++) {
 				keyframes[i] = keyframes[i].replace(/(translate(.*))/, 'transform:$1');
@@ -559,21 +578,18 @@
 			if (anim.key) {
 				animTag = document.createElement('style');
 
-				animTag.textContent = (anim === __.animationOut) ? anim.key.replace(/\(.*?\)/, `(${__.getTransform()})`) : anim.key;
-
 				head.appendChild(animTag);
+
+				animTag.textContent = (anim === __.animationOut) ? anim.key.replace(/\(.*?\)/, `(${__.getTransform()})`) : anim.key;
 			}
 
 			elem.tag.style.animation = `${anim.name} ${elem.animationDuration}s ${elem.animationTimigFunc}`;
 			elem.tag.addEventListener('animationend', () => {
-				elem.tag.style.animation = '';
 				if (anim.key) {
 					head.removeChild(animTag);
 				}
 			}, {once: true});
 		}
-
-
 	}
 	return SimpleMenu;
 });

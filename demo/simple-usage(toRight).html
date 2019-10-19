@@ -8,17 +8,17 @@
 	<link rel="stylesheet" href="./style.css">
 	<link rel="stylesheet" href="../src/highlight.js/styles/atom-one-dark.css">
 	<script src="../src/highlight.js/highlight.pack.js"></script>
-	<title>Simple usage (toBottom)</title>
+	<title>Simple usage (toRight)</title>
 </head>
-<body class="to-bottom">
+<body>
 	<script>hljs.initHighlightingOnLoad();</script>
 	<header class="hdr">
-		<a href="#" class="logo">LOGO</a>
 		<button type="button" class="side-menu-btn-open">
 			<span class="line line-top"></span>
 			<span class="line line-middle"></span>
 			<span class="line line-bottom"></span>
 		</button>
+		<a href="#" class="logo">LOGO</a>
 		<aside class="side-menu">
 			<div class="side-menu-hdr">
 				<a href="#" class="tel">+7(999)827-22-11</a>
@@ -42,7 +42,8 @@
 <pre><code class="plaintext">HTML:</code></pre>
 <pre><code class="html">&lt;body&gt;
   &lt;header class="hdr"&gt;
-    ... btn.side-menu-btn-open
+    btn.side-menu-btn-open
+    a.logo
     &lt;aside class="side-menu"&gt;
       ... btn.side-menu-btn-close
     &lt;/aside&gt;
@@ -52,12 +53,12 @@
 	<div class="code-block">
 <pre><code class="plaintext">CSS:</code></pre>
 <pre><code class="css">.hdr {
-  z-index: 11;
+  position: relative;
 }
 .side-menu {
   display: none;
   position: absolute;
-  top: 100%;
+  top: 0;
   z-index: 11;
 }
 .side-menu.active {
@@ -71,9 +72,9 @@
   menu: '.side-menu',
   openBtn: '.side-menu-btn-open',
   closeBtn: '.side-menu-btn-close',
-  desktop: true,
-  toBottom: true
+  desktop: true
   // defaults
+   //toLeft: true
    //menu class toggle 'active'
    //openBtn class toggle ''
    //closeBtn class toggle ''
@@ -95,8 +96,7 @@
 	  			menu: '.side-menu',
 	  			openBtn: '.side-menu-btn-open',
 	  			closeBtn: '.side-menu-btn-close',
-	  			desktop: true,
-	  			toBottom: true
+	  			desktop: true
 			});
 		});
 	</script>

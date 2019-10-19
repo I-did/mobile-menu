@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="./style.css">
 	<link rel="stylesheet" href="../src/highlight.js/styles/atom-one-dark.css">
 	<script src="../src/highlight.js/highlight.pack.js"></script>
-	<title>Simple usage (toBottom)</title>
+	<title>Buttons settings</title>
 </head>
 <body class="to-bottom">
 	<script>hljs.initHighlightingOnLoad();</script>
@@ -22,11 +22,6 @@
 		<aside class="side-menu">
 			<div class="side-menu-hdr">
 				<a href="#" class="tel">+7(999)827-22-11</a>
-				<button type="button" class="side-menu-btn-close active">
-					<span class="line line-top"></span>
-					<span class="line line-middle"></span>
-					<span class="line line-bottom"></span>
-				</button>
 			</div>
 			<nav class="side-menu-nav">
 				<a href="#" class="side-menu-nav-link">About</a>
@@ -69,8 +64,11 @@
 <pre><code class="plaintext">JS:</code></pre>
 <pre><code class="js">let mobileMenu = new SimpleMenu({
   menu: '.side-menu',
-  openBtn: '.side-menu-btn-open',
-  closeBtn: '.side-menu-btn-close',
+  openBtn: {
+    selector: '.side-menu-btn-open',
+    class: 'active',
+  },
+  closeBtn: '.side-menu-btn-open',
   desktop: true,
   toBottom: true
   // defaults
@@ -93,8 +91,11 @@
 		document.addEventListener('DOMContentLoaded', function(){
 			let mobileMenu = new SimpleMenu({
 	  			menu: '.side-menu',
-	  			openBtn: '.side-menu-btn-open',
-	  			closeBtn: '.side-menu-btn-close',
+	  			openBtn: {
+	  				selector: '.side-menu-btn-open',
+	  				class: 'active'
+	  			},
+	  			closeBtn: '.side-menu-btn-open',
 	  			desktop: true,
 	  			toBottom: true
 			});

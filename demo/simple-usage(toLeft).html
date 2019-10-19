@@ -4,127 +4,64 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="stylesheet" href="../src/highlight.js/styles/atom-one-dark.css"><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="./style.css">
+	<link rel="stylesheet" href="../src/highlight.js/styles/atom-one-dark.css">
 	<script src="../src/highlight.js/highlight.pack.js"></script>
-	<title>Simple usage</title>
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-		body {
-			position: relative;
-		}
-		.code {
-			max-width: 100%;
-			display: flex;
-			flex-wrap: wrap;
-			background: #282c34;
-
-		}
-		.code-block {
-			max-width: 100%;
-		}
-		.hdr {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 15px;
-			position: relative;
-		}
-		pre {margin-bottom: 0;}
-		
-		.side-menu-btn-open,.side-menu-btn-close {
-			border: none;
-			background: none;
-		}
-		.side-menu-btn-open:focus,.side-menu-btn-close:focus {
-			outline: none;
-		}
-		.side-menu-btn-open:active,.side-menu-btn-close:active {
-			transform: scale(.925);
-		}
-		.side-menu-btn-open {
-			width: 26px;
-			height: 20px;
-		}
-		.side-menu-btn-close{
-			text-decoration: underline;
-		}
-		.side-menu {
-			padding: 20px;
-			border: 1px solid #000;
-			background-color: #fff;
-			width: 320px;
-			max-width: 320px;
-			position: absolute;
-			top: 0;
-			display: none;
-			z-index: 30;
-		}
-		.side-menu.active {
-			display: block;
-		}
-		.side-menu-hdr {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			margin-bottom: 20px;
-		}
-		.side-menu>.nav {
-			width: 100%;
-			text-align: center;
-		}
-	</style>
+	<title>Simple usage (toLeft)</title>
 </head>
 <body>
 	<script>hljs.initHighlightingOnLoad();</script>
-	<header class="hdr container">
+	<header class="hdr">
 		<a href="#" class="logo">LOGO</a>
-		<nav class="nav">
-			<a href="#" class="nav-link">Link 1</a>
-			<a href="#" class="nav-link">Link 2</a>
-			<a href="#" class="nav-link">Link 3</a>
-			<a href="#" class="nav-link">Link 4</a>
-			<a href="#" class="nav-link">Link 5</a>
-		</nav>
-		<button class="side-menu-btn-open" type="button">
-			<svg width="100%" viewBox="0 0 29 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M2.5 4H26.5C27.604 4 28.5 3.104 28.5 2C28.5 0.896 27.604 0 26.5 0H2.5C1.396 0 0.5 0.896 0.5 2C0.5 3.104 1.396 4 2.5 4ZM26.5 8H2.5C1.396 8 0.5 8.896 0.5 10C0.5 11.104 1.396 12 2.5 12H26.5C27.604 12 28.5 11.104 28.5 10C28.5 8.896 27.604 8 26.5 8ZM26.5 16H2.5C1.396 16 0.5 16.896 0.5 18C0.5 19.104 1.396 20 2.5 20H26.5C27.604 20 28.5 19.104 28.5 18C28.5 16.896 27.604 16 26.5 16Z" fill="black"/>
-			</svg>
+		<button type="button" class="side-menu-btn-open">
+			<span class="line line-top"></span>
+			<span class="line line-middle"></span>
+			<span class="line line-bottom"></span>
 		</button>
+		<aside class="side-menu">
+			<div class="side-menu-hdr">
+				<a href="#" class="tel">+7(999)827-22-11</a>
+				<button type="button" class="side-menu-btn-close active">
+					<span class="line line-top"></span>
+					<span class="line line-middle"></span>
+					<span class="line line-bottom"></span>
+				</button>
+			</div>
+			<nav class="side-menu-nav">
+				<a href="#" class="side-menu-nav-link">About</a>
+				<a href="#" class="side-menu-nav-link">Team</a>
+				<a href="#" class="side-menu-nav-link">Projects</a>
+				<a href="#" class="side-menu-nav-link">Achievements</a>
+				<a href="#" class="side-menu-nav-link">Contacts</a>
+			</nav>
+		</aside>
 	</header>
-	<aside class="side-menu">
-		<nav class="nav flex-column justify-content-center">
-			<header class="side-menu-hdr">
-				<a href="#" class="logo">LOGO</a>
-				<button type="button" class="side-menu-btn-close">close</button>
-			</header>
-			<a href="#" class="nav-link">Link 1</a>
-			<a href="#" class="nav-link">Link 2</a>
-			<a href="#" class="nav-link">Link 3</a>
-			<a href="#" class="nav-link">Link 4</a>
-			<a href="#" class="nav-link">Link 5</a>
-		</nav>
-	</aside>
 	<div class="code">
 <div class="code-block">
 <pre><code class="plaintext">HTML:</code></pre>
 <pre><code class="html">&lt;body&gt;
-  &lt;header class="hdr container"&gt;...&lt;/header&gt;
-  &lt;aside class="side-menu"&gt;...&lt;/aside&gt;
+  &lt;header class="hdr"&gt;
+    a.logo
+    btn.side-menu-btn-open
+    &lt;aside class="side-menu"&gt;
+      ... btn.side-menu-btn-close
+    &lt;/aside&gt;
+  &lt;/header&gt;  
 &lt;/body&gt;</code></pre>
 </div>
 	<div class="code-block">
 <pre><code class="plaintext">CSS:</code></pre>
-<pre><code class="css">.side-menu{
+<pre><code class="css">.hdr {
+  position: relative;
+}
+.side-menu {
   display: none;
   position: absolute;
   top: 0;
-  z-index: 30;
+  z-index: 11;
 }
-.side-menu.active{
+.side-menu.active {
   display: block;
 }
 </code></pre>
@@ -152,16 +89,15 @@
 	</div>
 	</div>
 
-	<script src="../dist/SimpleMenu.es5.min.js"></script>
+	<script src="../src/SimpleMenu.js"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function(){
 			let mobileMenu = new SimpleMenu({
-  			menu: '.side-menu',
-  			openBtn: '.side-menu-btn-open',
-  			closeBtn: '.side-menu-btn-close',
-  			desktop: true
+	  			menu: '.side-menu',
+	  			openBtn: '.side-menu-btn-open',
+	  			closeBtn: '.side-menu-btn-close',
+	  			desktop: true
 			});
-			console.log(mobileMenu);
 		});
 	</script>
 </body>

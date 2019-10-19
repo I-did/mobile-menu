@@ -8,9 +8,9 @@
 	<link rel="stylesheet" href="./style.css">
 	<link rel="stylesheet" href="../src/highlight.js/styles/atom-one-dark.css">
 	<script src="../src/highlight.js/highlight.pack.js"></script>
-	<title>Simple usage (toBottom)</title>
+	<title>Buttons settings</title>
 </head>
-<body class="to-bottom">
+<body class="to-bottom btns-anim">
 	<script>hljs.initHighlightingOnLoad();</script>
 	<header class="hdr">
 		<a href="#" class="logo">LOGO</a>
@@ -22,7 +22,7 @@
 		<aside class="side-menu">
 			<div class="side-menu-hdr">
 				<a href="#" class="tel">+7(999)827-22-11</a>
-				<button type="button" class="side-menu-btn-close active">
+				<button type="button" class="side-menu-btn-close">
 					<span class="line line-top"></span>
 					<span class="line line-middle"></span>
 					<span class="line line-bottom"></span>
@@ -63,14 +63,37 @@
 .side-menu.active {
   display: block;
 }
+.side-menu-btn-open.active {
+  opacity: 0;
+}
+.side-menu-btn-close {
+  opacity: 0;
+}
+.side-menu-btn-close.active {
+  opacity: 1;
+}
 </code></pre>
 	</div>
 	<div class="code-block">
 <pre><code class="plaintext">JS:</code></pre>
 <pre><code class="js">let mobileMenu = new SimpleMenu({
   menu: '.side-menu',
-  openBtn: '.side-menu-btn-open',
-  closeBtn: '.side-menu-btn-close',
+  openBtn: {
+    selector: '.side-menu-btn-open',
+    class: 'active',
+    toggleClass: 'animationend'
+    // or
+    // addClass
+    // removeClass
+  },
+  closeBtn: {
+    selector: '.side-menu-btn-close',
+    class: 'active',
+    toggleClass: 'animationend'
+    // or
+    // addClass
+    // removeClass
+  },
   desktop: true,
   toBottom: true
   // defaults
@@ -93,8 +116,16 @@
 		document.addEventListener('DOMContentLoaded', function(){
 			let mobileMenu = new SimpleMenu({
 	  			menu: '.side-menu',
-	  			openBtn: '.side-menu-btn-open',
-	  			closeBtn: '.side-menu-btn-close',
+	  			openBtn: {
+	  				selector: '.side-menu-btn-open',
+	  				class: 'active',
+	  				toggleClass: 'animationend'
+	  			},
+	  			closeBtn: {
+	  				selector: '.side-menu-btn-close',
+	  				class: 'active',
+	  				toggleClass: 'animationend'
+	  			},
 	  			desktop: true,
 	  			toBottom: true
 			});

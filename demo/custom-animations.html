@@ -8,9 +8,9 @@
 	<link rel="stylesheet" href="./style.css">
 	<link rel="stylesheet" href="../src/highlight.js/styles/atom-one-dark.css">
 	<script src="../src/highlight.js/highlight.pack.js"></script>
-	<title>Simple usage (toBottom)</title>
+	<title>Custom animations</title>
 </head>
-<body class="to-bottom">
+<body class="fade-mode custom-anim">
 	<script>hljs.initHighlightingOnLoad();</script>
 	<header class="hdr">
 		<a href="#" class="logo">LOGO</a>
@@ -42,7 +42,8 @@
 <pre><code class="plaintext">HTML:</code></pre>
 <pre><code class="html">&lt;body&gt;
   &lt;header class="hdr"&gt;
-    ... btn.side-menu-btn-open
+    a.logo
+    btn.side-menu-btn-open
     &lt;aside class="side-menu"&gt;
       ... btn.side-menu-btn-close
     &lt;/aside&gt;
@@ -52,7 +53,7 @@
 	<div class="code-block">
 <pre><code class="plaintext">CSS:</code></pre>
 <pre><code class="css">.hdr {
-  z-index: 11;
+  position: relative;
 }
 .side-menu {
   display: none;
@@ -72,8 +73,9 @@
   openBtn: '.side-menu-btn-open',
   closeBtn: '.side-menu-btn-close',
   desktop: true,
-  toBottom: true
+  fade: true
   // defaults
+   //toLeft: true
    //menu class toggle 'active'
    //openBtn class toggle ''
    //closeBtn class toggle ''
@@ -92,11 +94,19 @@
 	<script>
 		document.addEventListener('DOMContentLoaded', function(){
 			let mobileMenu = new SimpleMenu({
-	  			menu: '.side-menu',
+	  			menu: {
+	  				selector: '.side-menu',
+	  				animationIn: {
+	  					name: 'bounceIn'
+	  				},
+	  				animationOut: {
+	  					name: 'bounceOut'
+	  				}
+	  			},
 	  			openBtn: '.side-menu-btn-open',
 	  			closeBtn: '.side-menu-btn-close',
 	  			desktop: true,
-	  			toBottom: true
+	  			fade: true
 			});
 		});
 	</script>

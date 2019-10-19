@@ -98,22 +98,17 @@ window.addEventListener('DOMContentLoaded', function(){
 			//removeClass: 'animationstart'
 			//toggleClass: 'animationend'
 		},
-		closeBtn: {
-			selector: '.close-menu-btn',
-			class: 'active',
-			//addClass: 'animationend',
-			//removeClass: 'animationstart'
-		},
+		// closeBtn: {
+		// 	selector: '.close-menu-btn',
+		// 	class: 'active',
+		// 	addClass: 'animationend',
+		// 	removeClass: 'animationstart'
+		// },
 		//mediaQuery: '(max-width: 1000px)',
-		//fade: true,
-		desktop: true
+		fade: true,
+		desktop: true,
 	});
-	let reload = document.querySelector('.reload');
-	reload.addEventListener('click', function() {
-		menu.reload();
-		console.log(menu);
-	});
-	console.log(menu);
+	// setTimeout(() => menu.open(), 2000);
 });
 </script>
 </body>
