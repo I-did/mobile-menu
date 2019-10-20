@@ -285,13 +285,14 @@
 						if (!__.height) {
 							__.height = __.tag.offsetHeight;
 						}
-						if (wrap.style.width !== `${__.width}px`) {
-							wrap.style.width = `${__.width}px`;
+						if (wrap.style.minWidth !== `${__.width}px`) {
+							wrap.style.minWidth = `${__.width}px`;
 						}
-						if (wrap.style.height !== `${__.height}px`) {
-							wrap.style.height = `${__.height}px`;
+						if (wrap.style.minHeight !== `${__.height}px`) {
+							wrap.style.minHeight = `${__.height}px`;
 						}
-					}					
+					}
+					__.tag.style.position = 'relative';
 
 				 	_.setAnimationFor(__, __.animationIn);
 
@@ -307,9 +308,8 @@
 					if (opt.container) {
 						__.parent.appendChild(wrap);
 						wrap.appendChild(__.tag);
-						__.contained = true;	
+						__.contained = true;
 					}
-					
 					
 					_.openBtn.tag.removeEventListener('click', __.open);
 					if (_.closeBtn) {
