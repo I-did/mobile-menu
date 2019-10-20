@@ -53,8 +53,8 @@
 }
 .menu {
 	position: absolute;
-	top: 100%;
-	left: 0;
+	top: 0;
+	/*right: 0;*/
 	background-color: cornsilk;
 	border: 2px solid purple;
 	border-radius: 15px;

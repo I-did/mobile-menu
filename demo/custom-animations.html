@@ -69,7 +69,15 @@
 	<div class="code-block">
 <pre><code class="plaintext">JS:</code></pre>
 <pre><code class="js">let mobileMenu = new SimpleMenu({
-  menu: '.side-menu',
+  menu: {
+  selector: '.side-menu',
+    animationIn: {
+      name: 'zoomIn'
+    },
+    animationOut: {
+      name: 'zoomOut'
+    }
+  },
   openBtn: '.side-menu-btn-open',
   closeBtn: '.side-menu-btn-close',
   desktop: true,
@@ -90,17 +98,18 @@
 	</div>
 	</div>
 
-	<script src="../src/SimpleMenu.js"></script>
+	<!-- <script src="../src/SimpleMenu.js"></script> -->
+	<script src="../dist/SimpleMenu.min.js"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function(){
 			let mobileMenu = new SimpleMenu({
 	  			menu: {
 	  				selector: '.side-menu',
 	  				animationIn: {
-	  					name: 'bounceIn'
+	  					name: 'zoomIn'
 	  				},
 	  				animationOut: {
-	  					name: 'bounceOut'
+	  					name: 'zoomOut'
 	  				}
 	  			},
 	  			openBtn: '.side-menu-btn-open',

@@ -1,5 +1,25 @@
 # Simple mobile menu
++ [Simple usage](#)
++ [Settings](#)
+  - [Media query](#)
+  - [Menu position](#)
+  - [Buttons settings](#)
+  - [Overlay settings](#)
+  - [Swipes](#)
+  - [Events](#)
+  - [Fade mode](#)
+  - [Custom animations](#)
+  - [Functions](#)
+  - [All settings](#)
 
+Мобильное меню, созданное с помощью этого скрипта, будет плавно выезжать в сторону, которая была определена автоматически или явно задана разработчиком (`toLeft`, `toRight`, `toTop`, `toBottom`).
+По умолчанию мобильное меню активно только на мобильных телефонах и планшетах.
+Меню реагирует на тач-события. Его можно задвинуть пальцем в ту сторону, откуда оно появилось.
+Также меню будет закрываться при прокрутке страницы на некоторое количество пикселей, нажатии клавиши esc, клике по overlay (создается автоматически) и клике по закрывающей кнопке (если она указана).
+При открытии меню оборачивается в контейнер с `overflow: hidden` для исключения появления горизонтальной прокрутки на странице.
+Меню можно открыть и закрыть в любой момент, вызвав функции `menu.open()` или `menu.close()`.
+Созданы события `beforeopen`, `open`, `beforeclose`, `close`, к которым можно привязаться для выполнения каких-либо действий.
+По умолчанию установлены анимации `transform: translate`, можно включить режим `fade: true` и задать свои анимации.
 ## Simple usage
 Just add the `script` tag before closing `<body>`:
 ```html
@@ -19,25 +39,29 @@ window.addEventListener('DOMContentLoaded', function(){
   });
 });
 ```
-
+По умолчанию при открытии меню, ему устанавливается класс `active` и анимация. Поэтому для корректной работы нужно задать кое-какие css-стили:
 ```css
 .css-selector-menu {
   display: none;
 }
 .css-selector-menu.active {
-  display: initial; \\block || flex || etc
+  display: initial; \\ block || flex || etc
 }
 ```
 Example [simple usage](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toLeft).html)
-## Main settings
+## Settings
 ### Media query
+Создание меню и всех его функций можно регулировать css медиа-запросом:
 ```javascript
 mediaQuery: '(max-width: 800px)'
 ```
+Тогда меню будет создаваться и работать только на размерах экранов до 800px.
 #### or desktop
+По умолчанию меню создается и работает только на телфонах и планшетах.
 ```javascript
 desktop: false // it's default
 ```
+Это поведение можно изменить, установив свойство `desktop: true`. Тогда меню будет создаваться и работать в любом случае.
 ### Menu position
 The menu is set near the open button, by default. This action can be changed by setting the side in which the menu will be moving.
 ```javascript
@@ -46,13 +70,12 @@ toRight: false   // it's default
 toBottom: false  // it's default
 toTop: false     // it's default
 ```
-Example with [toBottom](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toBottom).html)
-Example with [toTop](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toTop).html)
 Example with [toLeft](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toLeft).html)
 Example with [toRight](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toRight).html)
-## Other settings
-
+Example with [toBottom](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toBottom).html)
+Example with [toTop](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toTop).html)
 ### Buttons settings
+Можно задать несколько настроек для открывающей и закрывающей кнопкок:
 ```javascript
 openBtn: {   // or closeBtn
   selector: 'css-selector',      // any CSS-selector
@@ -62,11 +85,8 @@ openBtn: {   // or closeBtn
   toggleClass: 'animationend'    // when a class will be removed and added
 }
 ```
-```javascript
-openBtn: 'hamburger-btn',
-closeBtn: 'hamburger-btn'
-```
-
+Example with [buttons classes](https://i-did.github.io/mobile-menu-js/demo/buttons-settings.html)
+Example with [buttons classes toggles](https://i-did.github.io/mobile-menu-js/demo/buttons-animations.html)
 ### Overlay settings
 The overlay is generating automatically. It has default settings which can be changed by the following options:
 ```javascript
@@ -87,10 +107,88 @@ Or can be canceled:
 ```javascript
 overlay: false
 ```
-### Events
 ### Swipes
+Меню реагирует на тач события - его можно закрыть, задвинув его в ту сторону, откуда оно появилось. Если вести меню пальцем и отпустить слишком рано, то оно может не закрыться, а вернуться в начальное положение. По умолчанию меню будет закрываться, когда пройдет 30% своей ширины. Такое поведение можно регулировать:
+```javascript
+swipeThreshold: 0.3 // 30%
+```
+ Также можно отключить тач события:
+```javascript
+swipe: false
+````
+### Events
+Имеются несколько событий, к которым можно привязаться для совершения каких-то посторонних действий. Например, закрыть выпадающие списки внутри меню и т.д. Сделать это можно при помощи обычного `addEventListener`, передав первым аргументом одно из событий:
++ `'beforeopen'` - срабатывает перед открытием меню (сразу после нажатия на открывающую кнопку);
++ `'open'` - срабатывает когда меню полностью открылось;
++ `'beforeclose'` - срабаывает перед закрытием меню (сразу после нажатия на закрывающую кнопку);
++ `'close'` - срабатывает когда меню полностю закрылось.
+Обработчик событий нужно привязывать на свойство `tag` созданного меню:
+```javascript
+let mobileMenuDropdowns = document.querySelector('.side-menu-dropdown'),
+  mobileMenu = new SimpleMenu({
+    menu: '.side-menu',
+    openBtn: '.side-menu-btn-open',
+    closeBtn: '.side-menu-btn-close',
+    desktop: true
+  });
+
+mobileMenu.tag.addEventListener('beforeclose', () => 
+  mobileMenuDropdowns.forEach(element => element.classList.remove('active'))
+);
+```
 ### Fade mode
+Можно включить поддержу плавного исчезновения и появления при помощи свойства `fade`:
+```javascript
+fade: true // теперь меню будет плавно появляться и исчезать
+```
+Пример с [fade mode](https://i-did.github.io/mobile-menu-js/demo/fade-mode.html)
 ### Custom animation
+Можно задать свои анимации при закрытии и открытии меню. Для этого нужно обязательно установить свойство `fade: true`, затем создать нужные css-анимации и указать имена анимаций в объектах `animationIn` и `animationOut`.
+Анимация взята с [animate.css](https://daneden.github.io/animate.css/).
+```css
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes zoomOut {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  to {
+    opacity: 0;
+  }
+}
+```
+```javascript
+let mobileMenu = new SimpleMenu({
+  menu: '.side-menu',
+  openBtn: '.side-menu-btn-open',
+  closeBtn: '.side-menu-btn-close',
+  desktop: true,
+  fade: true,
+  animationIn: {
+    name: 'zoomIn'
+  },
+  animationOut: {
+    name: 'zoomOut'
+  }
+});
+```
+Пример с [кастомной анимацией](https://i-did.github.io/mobile-menu-js/demo/custom-animations.html)
+### Functions
+Меню можно вызвать и закрыть в любой момент, используя функции `menu.open()` и `menu.close()` соответственно, например:
+```javascript
+setTimeout(() => menu.open(), 1000); // меню откроется через 1 секунду
+```
 ### All settings
 ```javascript
 'use strict'

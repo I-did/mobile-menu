@@ -16,6 +16,7 @@
 			<a href="#" class="nav-link">Catalog</a>
 			<a href="#" class="nav-link">Production</a>
 			<a href="#" class="nav-link">Contacts</a>
+			<button type="button" class='reload'>reload</button>
 		</nav>
 		<button type="button" class="open-menu-btn"></button>
 		<aside class="menu" id="menu">
@@ -51,17 +52,18 @@
 	</section>
 
 <div class="overlay" id="overlay"></div>
-<script src="SimpleMenu.es5.min.js"></script>
+<script src="SimpleMenu.js"></script>
 <script>
 'use strict'
 window.addEventListener('DOMContentLoaded', function(){
+
 	let menu = new SimpleMenu({
 		//menu: '.menu',
 		menu: {
 			selector: '#menu',
 			// class: 'babive',
 			animationDuration: 0.5,
-			animationTimigFunc: 'ease',
+			animationTimigFunc: 'linear',
 			// animationIn: {
 			// 	name: 'bounceIn'
 			// },
@@ -69,6 +71,7 @@ window.addEventListener('DOMContentLoaded', function(){
 			// 	name: 'bounceOut'
 			// }
 		},
+		// fade: true,
 		//swipe: false,
 		//overlayClick: false,
 		//esc: false,
@@ -78,7 +81,7 @@ window.addEventListener('DOMContentLoaded', function(){
 			animationDuration: 0.5
 		},
 		//overlay: false,
-		//toTop: true,
+		// toTop: true,
 		//toBottom: true,
 		//toRight: true,
 		// overlay: {
@@ -96,18 +99,17 @@ window.addEventListener('DOMContentLoaded', function(){
 			//removeClass: 'animationstart'
 			//toggleClass: 'animationend'
 		},
-		closeBtn: {
-			selector: '.close-menu-btn',
-			class: 'actived',
-			//addClass: 'animationend',
-			//removeClass: 'animationstart'
-		},
+		// closeBtn: {
+		// 	selector: '.close-menu-btn',
+		// 	class: 'active',
+		// 	addClass: 'animationend',
+		// 	removeClass: 'animationstart'
+		// },
 		//mediaQuery: '(max-width: 1000px)',
-		//fade: true,
-		desktop: true
+		// fade: true,
+		desktop: true,
 	});
-
-	console.log(menu);
+	// setTimeout(() => menu.open(), 2000);
 });
 </script>
 </body>

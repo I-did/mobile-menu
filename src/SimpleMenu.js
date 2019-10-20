@@ -292,7 +292,9 @@
 							wrap.style.minHeight = `${__.height}px`;
 						}
 					}
-					__.tag.style.position = 'relative';
+					if (opt.container) {
+						__.tag.style.position = 'relative';
+					}					
 
 				 	_.setAnimationFor(__, __.animationIn);
 
@@ -502,10 +504,10 @@
 
 					let wrap = __.wrap = document.createElement('div');
 					wrap.style.cssText = 'position:absolute;overflow:hidden;';
-					wrap.style.top = menuStyles.top;
-					wrap.style.bottom = menuStyles.bottom;
-					wrap.style.left = menuStyles.left;
-					wrap.style.right = menuStyles.right;
+					wrap.style.top = (menuStyles.top === 'auto' && opt.toBottom) ? '0px' : menuStyles.top;
+					wrap.style.bottom = (menuStyles.bottom === 'auto' && opt.toTop) ? '0px' : menuStyles.bottom;
+					wrap.style.left = (menuStyles.left === 'auto' && opt.toRight) ? '0px' : menuStyles.left;
+					wrap.style.right = (menuStyles.right === 'auto' && opt.toLeft) ? '0px' : menuStyles.right;
 					wrap.style.zIndex = menuStyles.zIndex;
 					
 					__.contained = false;
@@ -543,11 +545,11 @@
 
 		init() {
 			_.openBtn = (function() {
-				let btn = _.findElement(opt.openBtn, 'Open button(s)');
+				let btn = _.findElement(opt.openBtn, 'Open button');
 				return btn;
 			})();
 
-			_.closeBtn = _.findElement(opt.closeBtn, 'Close button(s)');
+			_.closeBtn = _.findElement(opt.closeBtn, 'Close button');
 		}
 
 		findElement(elem, errorName) {

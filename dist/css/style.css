@@ -53,8 +53,8 @@
 }
 .menu {
 	position: absolute;
-	top: 100%;
-	left: 0;
+	top: 0;
+	/*right: 0;*/
 	background-color: cornsilk;
 	border: 2px solid purple;
 	border-radius: 15px;
@@ -88,7 +88,7 @@
 	outline: none;
 	transition: background-color 1s;
 }
-.close-menu-btn.actived {
+.close-menu-btn.active {
 	background: red;
 }
 .close-menu-btn:hover {
@@ -187,6 +187,8 @@
 	max-width: 700px;
 	margin-bottom: 20px;
 }
+
+
 
 * {
 	margin: 0;

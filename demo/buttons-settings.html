@@ -10,7 +10,7 @@
 	<script src="../src/highlight.js/highlight.pack.js"></script>
 	<title>Buttons settings</title>
 </head>
-<body class="to-bottom">
+<body class="to-bottom btns-settings">
 	<script>hljs.initHighlightingOnLoad();</script>
 	<header class="hdr">
 		<a href="#" class="logo">LOGO</a>
@@ -53,6 +53,7 @@
   display: none;
   position: absolute;
   top: 100%;
+  right: 0;
   z-index: 11;
 }
 .side-menu.active {
@@ -86,7 +87,8 @@
 	</div>
 	</div>
 
-	<script src="../src/SimpleMenu.js"></script>
+	<!-- <script src="../src/SimpleMenu.js"></script> -->
+	<script src="../dist/SimpleMenu.min.js"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function(){
 			let mobileMenu = new SimpleMenu({

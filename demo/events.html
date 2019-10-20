@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="./style.css">
 	<link rel="stylesheet" href="../src/highlight.js/styles/atom-one-dark.css">
 	<script src="../src/highlight.js/highlight.pack.js"></script>
-	<title>Simple usage (toLeft)</title>
+	<title>Events</title>
 </head>
 <body>
 	<script>hljs.initHighlightingOnLoad();</script>
@@ -31,7 +31,12 @@
 			<nav class="side-menu-nav">
 				<a href="#" class="side-menu-nav-link">About</a>
 				<a href="#" class="side-menu-nav-link">Team</a>
-				<a href="#" class="side-menu-nav-link">Projects</a>
+				<button type="button" class="side-menu-nav-link dropdown"><span>Projects</span></button>
+				<ul class="dropdown-list">
+					<li class="dropdown-list-item">Project one</li>
+					<li class="dropdown-list-item">Project two</li>
+					<li class="dropdown-list-item">Project three</li>
+				</ul>
 				<a href="#" class="side-menu-nav-link">Achievements</a>
 				<a href="#" class="side-menu-nav-link">Contacts</a>
 			</nav>
@@ -45,7 +50,10 @@
     a.logo
     btn.side-menu-btn-open
     &lt;aside class="side-menu"&gt;
-      ... btn.side-menu-btn-close
+      ...
+      btn.dropdown
+      ul.dropdown-list
+      ...
     &lt;/aside&gt;
   &lt;/header&gt;  
 &lt;/body&gt;</code></pre>
@@ -63,6 +71,14 @@
 }
 .side-menu.active {
   display: block;
+}
+.dropdown-list {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .5s;
+}
+.dropdown.active+.dropdown-list {
+  max-height: 100px;
 }
 </code></pre>
 	</div>
@@ -85,7 +101,15 @@
    //scrollingPxs: 50
    //swipe: true
    //swipeThreshold: 0.3
-});</code></pre>
+});
+let dropdownBtn = document.querySelector('.dropdown');
+dropdownBtn.addEventListener('click', function() {
+  this.classList.toggle('active');
+});
+
+mobileMenu.tag.addEventListener('beforeclose', () => 
+  dropdownBtn.classList.remove('active')
+);</code></pre>
 	</div>
 	</div>
 
@@ -98,6 +122,15 @@
 	  			openBtn: '.side-menu-btn-open',
 	  			closeBtn: '.side-menu-btn-close',
 	  			desktop: true
+			}),
+				dropdownBtn = document.querySelector('.dropdown');
+
+			dropdownBtn.addEventListener('click', function() {
+				this.classList.toggle('active');
+			});
+
+			mobileMenu.tag.addEventListener('beforeclose', function() {
+				dropdownBtn.classList.remove('active');
 			});
 		});
 	</script>

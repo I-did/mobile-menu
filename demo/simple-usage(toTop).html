@@ -38,7 +38,8 @@
 .side-menu {
   display: none;
   position: absolute;
-  right: 0;
+  bottom: 100%;
+  right: 0; /* for ie */
   z-index: 11;
 }
 .side-menu.active {
@@ -93,7 +94,8 @@
 			</nav>
 		</aside>
 	</footer>
-	<script src="../src/SimpleMenu.js"></script>
+	<!-- <script src="../src/SimpleMenu.js"></script> -->
+	<script src="../dist/SimpleMenu.min.js"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', function(){
 			let mobileMenu = new SimpleMenu({
