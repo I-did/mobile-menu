@@ -313,10 +313,7 @@
 						__.contained = true;
 					}
 					
-					_.openBtn.tag.removeEventListener('click', __.open);
-					if (_.closeBtn) {
-						_.closeBtn.tag.addEventListener('click', __.close);
-					}										
+					_.openBtn.tag.removeEventListener('click', __.open);										
 					__.tag.dispatchEvent(new Event('beforeopen'));
 
 					__.tag.addEventListener('animationend', function() {							

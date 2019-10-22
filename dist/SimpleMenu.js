@@ -387,10 +387,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
             _.openBtn.tag.removeEventListener('click', __.open);
 
-            if (_.closeBtn) {
-              _.closeBtn.tag.addEventListener('click', __.close);
-            }
-
             let e = new CustomEvent('beforeopen');
             __.tag.dispatchEvent(e);
 

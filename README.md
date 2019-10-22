@@ -12,22 +12,22 @@
   - [Functions](#)
   - [All settings](#)
 
-Мобильное меню, созданное с помощью этого скрипта, будет плавно выезжать в сторону, которая была определена автоматически или явно задана разработчиком (`toLeft`, `toRight`, `toTop`, `toBottom`).
-По умолчанию мобильное меню активно только на мобильных телефонах и планшетах.
-Меню реагирует на тач-события. Его можно задвинуть пальцем в ту сторону, откуда оно появилось.
-Также меню будет закрываться при прокрутке страницы на некоторое количество пикселей, нажатии клавиши esc, клике по overlay (создается автоматически) и клике по закрывающей кнопке (если она указана).
-При открытии меню оборачивается в контейнер с `overflow: hidden` для исключения появления горизонтальной прокрутки на странице.
-Меню можно открыть и закрыть в любой момент, вызвав функции `menu.open()` или `menu.close()`.
-Созданы события `beforeopen`, `open`, `beforeclose`, `close`, к которым можно привязаться для выполнения каких-либо действий.
-По умолчанию установлены анимации `transform: translate`, можно включить режим `fade: true` и задать свои анимации.
+The menu created by this script will smoothly be moving to the automatically defined side or the side set by the developer (`toLeft`, `toRight`, `toTop`, `toBottom`).
+The menu is active only on mobile phones and tablets, by default. And supports touch events. It can be swiped to the initial side.
+Also, the menu can be closed  by the following:
++ during page scrolling by 50 px (can be changed);
++ by pressing key ESC;
++ with clicking the overlay;
++ with clicking the close button.
+The menu will be wrapped into a container with `overflow: hidden` during the opening to avoid horizontal page scrolling.
+The menu can be opened or closed at any moment by calling functions `menu.open()` or `menu.close()`.
+Also, there are events `beforeopen`, `open`, `beforeclose`, `close`, which can be used for any actions on the web page.
+Animation `transform: translate` is used, by default. Option `fade: true` can be set to add unique animations.
+IE 11 suports it.
 ## Simple usage
-Just add the `script` tag before closing `<body>`:
+Add the `script` tag before closing `<body>`:
 ```html
 <script src="SimpleMenu.min.js"></script>
-```
-In case IE (or other old browsers) support is needed:
-```html
-<script src="SimpleMenu.es5.min.js"></script>
 ```
 Then add a few required settings:
 ```javascript
@@ -39,7 +39,7 @@ window.addEventListener('DOMContentLoaded', function(){
   });
 });
 ```
-По умолчанию при открытии меню, ему устанавливается класс `active` и анимация. Поэтому для корректной работы нужно задать кое-какие css-стили:
+Class (`active` or set) and animation are added to the menu during the opening, by default. For correct work, some CSS-styles should be set.
 ```css
 .css-selector-menu {
   display: none;
@@ -71,8 +71,11 @@ toBottom: false  // it's default
 toTop: false     // it's default
 ```
 Example with [toLeft](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toLeft).html)
+
 Example with [toRight](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toRight).html)
+
 Example with [toBottom](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toBottom).html)
+
 Example with [toTop](https://i-did.github.io/mobile-menu-js/demo/simple-usage(toTop).html)
 ### Buttons settings
 Можно задать несколько настроек для открывающей и закрывающей кнопкок:
