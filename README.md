@@ -19,6 +19,7 @@ Also, the menu can be closed  by the following:
 + by pressing key ESC;
 + with clicking the overlay;
 + with clicking the close button.
+
 The menu will be wrapped into a container with `overflow: hidden` during the opening to avoid horizontal page scrolling.
 The menu can be opened or closed at any moment by calling functions `menu.open()` or `menu.close()`.
 Also, there are events `beforeopen`, `open`, `beforeclose`, `close`, which can be used for any actions on the web page.
