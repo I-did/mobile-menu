@@ -126,7 +126,6 @@ swipe: false
 + `'open'` - срабатывает когда меню полностью открылось;
 + `'beforeclose'` - срабаывает перед закрытием меню (сразу после нажатия на закрывающую кнопку);
 + `'close'` - срабатывает когда меню полностю закрылось.
-Обработчик событий нужно привязывать на свойство `tag` созданного меню:
 ```javascript
 let mobileMenuDropdowns = document.querySelector('.side-menu-dropdown'),
   mobileMenu = new SimpleMenu({
@@ -136,7 +135,7 @@ let mobileMenuDropdowns = document.querySelector('.side-menu-dropdown'),
     desktop: true
   });
 
-mobileMenu.tag.addEventListener('beforeclose', () => 
+mobileMenu.addEventListener('beforeclose', () => 
   mobileMenuDropdowns.forEach(element => element.classList.remove('active'))
 );
 ```

@@ -172,6 +172,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _.checkMedia();
 
       window.addEventListener('resize', debounce(_.checkMedia, 100));
+      return __.tag;
     }
 
     _createClass(SimpleMenu, [{
@@ -332,7 +333,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             buttonToggleClass(_.closeBtn);
           }
 
-          _.open = __.open = function () {
+          __.tag.open = _.open = __.open = function () {
             let overlay = _.overlay,
                 wrap = __.wrap;
 
@@ -449,7 +450,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             // });
           };
 
-          _.close = __.close = function () {
+          __.tag.close = _.close = __.close = function () {
             let overlay = _.overlay;
 
             if (event && event.type === 'keyup' && event.keyCode !== 27) {

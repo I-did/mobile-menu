@@ -109,7 +109,13 @@ window.addEventListener('DOMContentLoaded', function(){
 		// fade: true,
 		desktop: true,
 	});
-	// setTimeout(() => menu.open(), 2000);
+	menu.addEventListener('beforeopen', function() {
+		console.log('beforeopen');
+	});
+	menu.addEventListener('open', function() {
+		console.log('open');
+	});
+
 });
 </script>
 </body>
