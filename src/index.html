@@ -58,19 +58,19 @@
 window.addEventListener('DOMContentLoaded', function(){
 
 	let menu = new SimpleMenu({
-		//menu: '.menu',
-		menu: {
-			selector: '#menu',
-			// class: 'babive',
-			animationDuration: 0.5,
-			animationTimigFunc: 'linear'
-			// animationIn: {
-			// 	name: 'bounceIn'
-			// },
-			// animationOut: {
-			// 	name: 'bounceOut'
-			// }
-		},
+		menu: '#menu',
+		// menu: {
+		// 	selector: '#menu',
+		// 	// class: 'babive',
+		// 	animationDuration: 0.5,
+		// 	animationTimigFunc: 'linear'
+		// 	// animationIn: {
+		// 	// 	name: 'bounceIn'
+		// 	// },
+		// 	// animationOut: {
+		// 	// 	name: 'bounceOut'
+		// 	// }
+		// },
 		//swipe: false,
 		//overlayClick: false,
 		//esc: false,
@@ -90,14 +90,15 @@ window.addEventListener('DOMContentLoaded', function(){
 		// 	css: 'cursor: pointer'
 		// },
 		//overlay: false,
-		//openBtn: '.open-menu-btn',
-		openBtn: {
-			selector: '.open-menu-btn',
-			class: 'active',
-			//addClass: 'animationstart',
-			//removeClass: 'animationstart'
-			//toggleClass: 'animationend'
-		},
+		closeBtn: '.close-menu-btn',
+		openBtn: '.open-menu-btn',
+		// openBtn: {
+		// 	selector: '.open-menu-btn',
+		// 	class: 'active',
+		// 	//addClass: 'animationstart',
+		// 	//removeClass: 'animationstart'
+		// 	//toggleClass: 'animationend'
+		// },
 		// closeBtn: {
 		// 	selector: '.close-menu-btn',
 		// 	class: 'active',
