@@ -172,7 +172,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _.checkMedia();
 
       window.addEventListener('resize', debounce(_.checkMedia, 100));
-      return __.tag;
+      if (__) {
+        return __.tag;
+      }     
     }
 
     _createClass(SimpleMenu, [{
