@@ -34,6 +34,7 @@ coverage
 gulpfile.js
 package-lock.json
 package.json
+scripts
 
 # Bower dependency directory (https://bower.io/)
 bower_components
